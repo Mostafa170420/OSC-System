@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "955852617059",
+    "project_id": "osc-system",
+    "storage_bucket": "osc-system.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955852617059:android:9525aff1ff57d9e7b24f56",
+        "android_client_info": {
+          "package_name": "com.example.osc_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhCjPO4ySI1HIbAq5k31XZf8wR4rh38ic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
