@@ -8,7 +8,7 @@ class WorkshopRepositoryImp extends WorkshopRepository {
   @override
   Stream<List<WorkshopMemberModel>> watchMembers(WorkshopModel workshop) {
     return FirebaseHelper.getAllDocStream(
-            "workshop/workshop25/${EndPoints.members}")
+            "workshop/workshop25/${EndPoints.workshopMembers}")
         .map(
       (event) => event.docs
           .map(

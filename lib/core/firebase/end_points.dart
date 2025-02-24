@@ -1,5 +1,6 @@
 class EndPoints {
-  static String members = "members";
+  static String workshopMembers = "members";
+  static String salkhanaMembers = "Member";
   static String sessions = "sessions";
   static String attendance = "attendance";
 }
