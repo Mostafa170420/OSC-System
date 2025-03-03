@@ -13,4 +13,30 @@ class FirebaseHelper {
       rethrow;
     }
   }
+
+  static Future<void> addDoc(
+      String path, String id, Map<String, dynamic> data) async {
+    try {
+      await _firebaseFirestore.collection(path).doc(id).set(data);
+    } on FirebaseException catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> updateDoc(
+      String path, String id, Map<String, dynamic> data) async {
+    try {
+      await _firebaseFirestore.collection(path).doc(id).update(data);
+    } on FirebaseException catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> removeDoc(String path, String id) async {
+    try {
+      await _firebaseFirestore.collection(path).doc(id).delete();
+    } on FirebaseException catch (e) {
+      rethrow;
+    }
+  }
 }

@@ -13,11 +13,11 @@ class SalkhanaMemberModel {
   final String resultCommittee2;
   final String? rejectionReasonCommittee1;
   final String? rejectionReasonCommittee2;
-  final DateTime? attendanceDate;
   final bool emailSent;
 
   // Factory Constructor to create a Member object from Firestore document
   factory SalkhanaMemberModel.fromFirestore(DocumentSnapshot doc) {
+    print(doc.data());
     var data = doc.data() as Map;
     return SalkhanaMemberModel(
       id: doc.id,
@@ -32,7 +32,6 @@ class SalkhanaMemberModel {
       resultCommittee2: data['result_committee_2'] ?? '',
       rejectionReasonCommittee1: data['rejection_reason_committee_1'],
       rejectionReasonCommittee2: data['rejection_reason_committee_2'],
-      attendanceDate: (data['attendance_date'] as Timestamp?)?.toDate(),
       emailSent: data['email_sent'] ?? false,
     );
   }
@@ -51,8 +50,6 @@ class SalkhanaMemberModel {
       "result_committee_2": resultCommittee2,
       "rejection_reason_committee_1": rejectionReasonCommittee1,
       "rejection_reason_committee_2": rejectionReasonCommittee2,
-      "attendance_date":
-          attendanceDate != null ? Timestamp.fromDate(attendanceDate!) : null,
       "email_sent": emailSent,
     };
   }
@@ -71,7 +68,6 @@ class SalkhanaMemberModel {
     required this.resultCommittee2,
     this.rejectionReasonCommittee1,
     this.rejectionReasonCommittee2,
-    this.attendanceDate,
     required this.emailSent,
   });
 }

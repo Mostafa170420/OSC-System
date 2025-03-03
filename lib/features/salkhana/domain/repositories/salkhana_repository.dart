@@ -1,10 +1,17 @@
+import 'package:either_dart/either.dart';
+
+import '../../../../core/errors/failure.dart';
 import '/../features/salkhana/data/model/member.dart';
 
 abstract class SalkhanaRepository {
   // get all members
-  Stream<List<SalkhanaMemberModel>> watchMembers(String salkhanaSeason);
+  Future<Either<Failure, Stream<List<SalkhanaMemberModel>>>> watchMembers(
+      String salkhanaSeason);
   // add new member
-  Future <void> addMember(SalkhanaMemberModel memberModel);
-  Future <void> updateMember(SalkhanaMemberModel memberModel);
-  Future <void> removeMember(String memberId);
+  Future<Either<Failure, void>> addMember(
+      SalkhanaMemberModel memberModel, String salkhanaSeason);
+  Future<Either<Failure, void>> updateMember(
+      SalkhanaMemberModel memberModel, String salkhanaSeason);
+  Future<Either<Failure, void>> removeMember(
+      String memberId, String salkhanaSeason);
 }
