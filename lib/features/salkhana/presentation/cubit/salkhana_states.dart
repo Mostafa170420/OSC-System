@@ -4,13 +4,13 @@ class SalkhanaStates {}
 
 class SalkhanaLoading extends SalkhanaStates {}
 
-class SalkhanaSucsses extends SalkhanaStates {
+class SalkhanaSuccsses extends SalkhanaStates {
   List<SalkhanaMemberModel> members;
-  SalkhanaSucsses({required this.members});
+  SalkhanaSuccsses({required this.members});
 }
 
 class SalkhanaFailureFirestore extends SalkhanaStates {}
 
-class SalkhanaSucssesFirestore extends SalkhanaStates {}
+class SalkhanaSuccssesFirestore extends SalkhanaStates {}
 
 class SalkhanaFailureNetwork extends SalkhanaStates {}
