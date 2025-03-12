@@ -1,7 +1,9 @@
-import 'package:osc_system/core/firebase/firebase_helper.dart';
-import 'package:osc_system/features/workshop/data/model/sup__model/workshop_member.dart';
-import 'package:osc_system/features/workshop/data/model/workshop.dart';
-import 'package:osc_system/features/workshop/domain/repositories/workshop_repository.dart';
+
+
+import '../../../../core/firebase/firebase_helper.dart';
+import '../../domain/repositories/workshop_repository.dart';
+import '../model/sup__model/workshop_member.dart';
+import '../model/workshop.dart' show WorkshopModel;
 
 class WorkshopRepositoryImp extends WorkshopRepository {
   @override

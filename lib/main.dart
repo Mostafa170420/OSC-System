@@ -1,16 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/features/salkhana/presentation/screens/dashboard_screen.dart';
 
 import '/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import '/firebase_options.dart';
-import 'core/theme.dart';
+import 'core/theme/theme.dart';
 import 'features/salkhana/data/repositories/salkhana_repository_imp.dart';
 import 'features/salkhana/presentation/cubit/theme_cubit.dart';
 import 'features/salkhana/presentation/cubit/theme_states.dart';
-
-
+import 'features/salkhana/presentation/screens/dashboard_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,19 +28,19 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              SalkhanaCubit(salkhanaRepository: SalkhanaRepositoryImp())
-                ..getMembers(),
-        ),
+            create: (context) =>
+                SalkhanaCubit(salkhanaRepository: SalkhanaRepositoryImp())
+                  ..getMembers()
+                  ..getMembers()),
         BlocProvider(create: (_) => ThemeCubit()),
       ],
-      child:BlocBuilder<ThemeCubit, ThemeState>(
+      child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-             theme: state is LightThemeState
+            theme: state is LightThemeState
                 ? AppThemes.lightTheme
-                : AppThemes.darkTheme,  // 🌟 Uses the selected theme
+                : AppThemes.darkTheme, // 🌟 Uses the selected theme
             home: DashboardScreen(),
           );
         },
@@ -50,5 +48,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

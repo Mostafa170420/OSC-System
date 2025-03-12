@@ -1,63 +1,57 @@
 import 'package:flutter/material.dart';
 
-import '../screens/dashboard_screen.dart';
-import '../screens/members_screen.dart';
-import '../screens/settings_screen.dart';
-
-
-
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        bool isDesktop = constraints.maxWidth > 800;
-
-        Widget menu = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Drawer(
+      child: SingleChildScrollView(
+        child: Column(
           children: [
             DrawerHeader(
-              child: Column(
-                children: [
-                  Image.asset('assets/images/OSC_logo.png', width: 80),
-                  SizedBox(height: 10),
-                  Text("OSC System", style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 22)),
-                ],
-              ),
+              padding: EdgeInsets.all(25),
+              child: Image.asset("assets/images/OSC_logo.png"),
             ),
-            SidebarItem(icon: Icons.dashboard, title: "Dashboard", screen: DashboardScreen()),
-            SidebarItem(icon: Icons.people, title: "Members", screen: MembersScreen()),
-            SidebarItem(icon: Icons.settings, title: "Settings", screen: SettingsScreen()),
+            DrawerListTile(
+                icon: Icons.dashboard, title: "Dashboard", screen: SizedBox()),
+            DrawerListTile(
+                icon: Icons.people, title: "Members", screen: SizedBox()),
+            DrawerListTile(
+                icon: Icons.settings, title: "Settings", screen: SizedBox())
           ],
-        );
-
-        return isDesktop
-            ? Container(
-                width: 250,
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: menu,
-              )
-            : Drawer(child: menu);
-      },
+        ),
+      ),
     );
   }
 }
 
-class SidebarItem extends StatelessWidget {
+class DrawerListTile extends StatelessWidget {
+  const DrawerListTile(
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.screen});
   final IconData icon;
   final String title;
   final Widget screen;
-
-  SidebarItem({required this.icon, required this.title, required this.screen});
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: Theme.of(context).primaryColor),
-      title: Text(title, style: TextStyle(color: Theme.of(context).primaryColor)),
-      onTap: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => screen)),
+      minTileHeight: 60,
+      contentPadding: EdgeInsets.only(left: 20),
+      onTap: () {},
+      horizontalTitleGap: 30,
+      leading: Icon(
+        icon,
+        color: Theme.of(context).primaryColor,
+      ),
+      title: Text(
+        title,
+        maxLines: 1,
+        overflow: TextOverflow.clip,
+        style: Theme.of(context).textTheme.labelMedium,
+      ),
     );
   }
 }
