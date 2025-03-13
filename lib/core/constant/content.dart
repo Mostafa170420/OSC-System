@@ -1,4 +1,4 @@
-List commities = [
+List committees = [
   ["assets/images/icons8-flutter-logo-100.png", "Flutter"],
   ["assets/images/backend-coding.png", "Back-End"],
   ["assets/images/front-end-programming.png", "Front-End"],
