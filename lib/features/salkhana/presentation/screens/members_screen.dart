@@ -12,26 +12,29 @@ class MembersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Members")),
+      backgroundColor: Color(0xff252728),
+      appBar: AppBar(centerTitle: true, title: Text("Members")),
       drawer: Sidebar(),
       body: BlocConsumer<SalkhanaCubit, SalkhanaStates>(
-        buildWhen: (previous, current) => (current is SalkhanaSuccsses ||
-            current is SalkhanaLoading ||
-            current is SalkhanaFailureNetwork),
-        listener: (context, state) {
-          if (state is SalkhanaSuccssesFirestore) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Successfully")));
-          }
-        },
-        builder: (context, state) {
-          if (state is SalkhanaSuccsses) {
-             return Center(child: MemberTable(members: state.members));
-          }
-          return Center(child:  CircularProgressIndicator(color:Theme.of(context).primaryColor,));
-        }),
+          buildWhen: (previous, current) => (current is SalkhanaSuccsses ||
+              current is SalkhanaLoading ||
+              current is SalkhanaFailureNetwork),
+          listener: (context, state) {
+            if (state is SalkhanaSuccssesFirestore) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text("Successfully")));
+            }
+          },
+          builder: (context, state) {
+            if (state is SalkhanaSuccsses) {
+              
+              return MemberTable(members: state.members);
+            }
+            return Center(
+                child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+            ));
+          }),
     );
   }
 }

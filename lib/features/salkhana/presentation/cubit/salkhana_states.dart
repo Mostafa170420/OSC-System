@@ -1,4 +1,9 @@
-import '/features/salkhana/data/model/member.dart';
+
+
+
+
+import '../../data/model/member.dart';
+
 
 class SalkhanaStates {}
 

@@ -1,5 +1,6 @@
-import 'package:osc_system/features/workshop/data/model/session.dart';
-import 'package:osc_system/features/workshop/data/model/sup__model/workshop_member.dart';
+
+import 'session.dart';
+import 'sup__model/workshop_member.dart' show WorkshopMemberModel;
 
 class WorkshopModel {
   String? title;

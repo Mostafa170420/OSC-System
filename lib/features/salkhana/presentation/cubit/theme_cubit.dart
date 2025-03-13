@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import '/features/salkhana/presentation/cubit/theme_states.dart';
-import '../../../../core/theme.dart';
+import '../../../../core/theme/theme.dart';
 
 class ThemeCubit extends Cubit<ThemeState> {
-  ThemeCubit() : super(LightThemeState());
+  ThemeCubit() : super(DarkThemeState());
 
   void toggleTheme() {
     if (state is LightThemeState) {
@@ -15,6 +15,8 @@ class ThemeCubit extends Cubit<ThemeState> {
   }
 
   ThemeData get currentTheme {
-    return state is LightThemeState ? AppThemes.lightTheme : AppThemes.darkTheme;
+    return state is LightThemeState
+        ? AppThemes.lightTheme
+        : AppThemes.darkTheme;
   }
 }

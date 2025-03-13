@@ -1,4 +1,5 @@
-import 'package:osc_system/features/workshop/data/model/sup__model/session_member.dart';
+
+import 'sup__model/session_member.dart';
 
 class SessionModel {
   String id;
