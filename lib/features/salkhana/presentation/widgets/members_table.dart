@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/core/constant/contant.dart';
 import 'package:osc_system/core/responsive.dart';
 import 'package:osc_system/features/salkhana/data/model/member.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_states.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+
+import '../../../../core/constant/content.dart';
 
 class MembersTable extends StatelessWidget {
   MembersTable({super.key});
@@ -123,7 +124,7 @@ class MembersTable extends StatelessWidget {
               DataCell(Center(
                   child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Image.asset(commities[0][0]),
+                child: Image.asset(committees[0][0]),
               ))),
               DataCell(Center(
                 child: Text(

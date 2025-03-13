@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:osc_system/core/constant/contant.dart';
+import 'package:osc_system/core/constant/content.dart';
 
 class RightSidebar extends StatelessWidget {
   const RightSidebar({super.key});
@@ -12,7 +12,7 @@ class RightSidebar extends StatelessWidget {
         child: Column(
           spacing: 10,
           children: [
-            for (int i = 0; i < commities.length; i++)
+            for (int i = 0; i < committees.length; i++)
               Expanded(
                 child: MaterialButton(
                   color: Theme.of(context).canvasColor,
@@ -23,10 +23,10 @@ class RightSidebar extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        Expanded(flex: 2, child: Image.asset(commities[i][0])),
+                        Expanded(flex: 2, child: Image.asset(committees[i][0])),
                         Expanded(
                             child: Text(
-                          commities[i][1],
+                          committees[i][1],
                           style: Theme.of(context).textTheme.labelMedium,
                         ))
                       ],
