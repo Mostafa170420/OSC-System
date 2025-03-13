@@ -14,7 +14,6 @@ import 'features/salkhana/presentation/cubit/theme_states.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

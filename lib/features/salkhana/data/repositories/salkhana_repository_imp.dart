@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:osc_system/core/firebase/firebase_helper.dart';
+import '/core/firebase/firebase_helper.dart';
 
 import '../../../../core/errors/failure.dart';
 import '../../../../core/firebase/end_points.dart';

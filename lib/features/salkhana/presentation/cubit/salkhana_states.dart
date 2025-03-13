@@ -1,4 +1,4 @@
-import 'package:osc_system/features/salkhana/data/model/member.dart';
+import '/features/salkhana/data/model/member.dart';
 
 class SalkhanaStates {}
 

@@ -17,6 +17,7 @@ class SalkhanaMemberModel {
 
   // Factory Constructor to create a Member object from Firestore document
   factory SalkhanaMemberModel.fromFirestore(DocumentSnapshot doc) {
+    // ignore: avoid_print
     print(doc.data());
     var data = doc.data() as Map;
     return SalkhanaMemberModel(
