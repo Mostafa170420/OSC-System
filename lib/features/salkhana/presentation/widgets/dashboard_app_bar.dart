@@ -5,13 +5,16 @@ class DashboardAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          Text(
-            "Dashboard",
-            style: Theme.of(context).textTheme.titleLarge,
+          Expanded(
+            child: Text(
+              "Dashboard",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
           ),
           Spacer(
             flex: 2,
@@ -62,26 +65,38 @@ class DashboardAppBar extends StatelessWidget {
           SizedBox(
             width: 20,
           ),
-          Container(
-            padding: EdgeInsetsDirectional.symmetric(horizontal: 20),
-            height: double.infinity,
-            decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              spacing: 10,
-              children: [
-                Icon(
-                  Icons.person,
-                  size: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-                Text("Mostafa Ahmed",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium
-                        ?.copyWith(color: Colors.white)),
-              ],
+          Flexible(
+            child: Container(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 20),
+              width: size.width / 5,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: FittedBox(
+                      child: Icon(
+                        Icons.person,
+                        size: 30,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 3,
+                    child: FittedBox(
+                      child: Text("Mostafa Ahmed",
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium
+                              ?.copyWith(color: Colors.white)),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],

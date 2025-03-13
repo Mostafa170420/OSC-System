@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/features/salkhana/presentation/cubit/sidebar_cubit.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
@@ -14,11 +16,11 @@ class Sidebar extends StatelessWidget {
               child: Image.asset("assets/images/OSC_logo.png"),
             ),
             DrawerListTile(
-                icon: Icons.dashboard, title: "Dashboard", screen: SizedBox()),
+                icon: Icons.dashboard, title: "Dashboard", screenIndex: 0),
             DrawerListTile(
-                icon: Icons.people, title: "Members", screen: SizedBox()),
+                icon: Icons.people, title: "Members", screenIndex: 1),
             DrawerListTile(
-                icon: Icons.settings, title: "Settings", screen: SizedBox())
+                icon: Icons.settings, title: "Settings", screenIndex: 2)
           ],
         ),
       ),
@@ -27,20 +29,24 @@ class Sidebar extends StatelessWidget {
 }
 
 class DrawerListTile extends StatelessWidget {
-  const DrawerListTile(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.screen});
+  const DrawerListTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.screenIndex,
+  });
   final IconData icon;
   final String title;
-  final Widget screen;
+  final screenIndex;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       minTileHeight: 60,
       contentPadding: EdgeInsets.only(left: 20),
-      onTap: () {},
+      onTap: () {
+        BlocProvider.of<SidebarCubit>(context).changeScreen(screenIndex);
+      },
       horizontalTitleGap: 30,
       leading: Icon(
         icon,

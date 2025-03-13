@@ -19,7 +19,7 @@ class DashboardDetails extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
               child: MembersTable(),
             ),
           ),

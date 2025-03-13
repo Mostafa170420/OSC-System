@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 SalkhanaCubit(salkhanaRepository: SalkhanaRepositoryImp())
-                  ..getMembers()
                   ..getMembers()),
         BlocProvider(create: (_) => ThemeCubit()),
       ],
