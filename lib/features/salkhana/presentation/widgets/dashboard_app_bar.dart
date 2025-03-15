@@ -4,8 +4,8 @@ import 'package:osc_system/features/salkhana/data/model/member.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 
 class DashboardAppBar extends StatelessWidget {
-  const DashboardAppBar({super.key});
-
+  DashboardAppBar({super.key});
+  TextEditingController text = TextEditingController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -36,6 +36,10 @@ class DashboardAppBar extends StatelessWidget {
                       flex: 6,
                       child: SizedBox(
                         child: TextFormField(
+                          controller: text,
+                          onChanged: (value) =>
+                              BlocProvider.of<SalkhanaCubit>(context)
+                                  .searshMember(value),
                           decoration: InputDecoration(
                             hintText: "Search",
                             border: InputBorder.none,

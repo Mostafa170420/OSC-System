@@ -17,7 +17,7 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
           "salkhana/$salkhanaSeason/${EndPoints.salkhanaMembers}",
           memberModel.id,
           memberModel.toFirestore());
-      return Right(0 as Function(dynamic p1));
+      return Right(0);
     } on FirebaseException catch (e) {
       return Left(Failure());
     }
@@ -31,7 +31,7 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
         "salkhana/$salkhanaSeason/${EndPoints.salkhanaMembers}",
         memberId,
       );
-      return Right(0 as Function(dynamic p1));
+      return Right(0);
     } on FirebaseException catch (e) {
       return Left(Failure());
     }
@@ -45,7 +45,7 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
           "salkhana/$salkhanaSeason/${EndPoints.salkhanaMembers}",
           memberModel.id,
           memberModel.toFirestore());
-      return Right(0 as Function(dynamic p1));
+      return Right(0);
     } on FirebaseException catch (e) {
       return Left(Failure());
     }

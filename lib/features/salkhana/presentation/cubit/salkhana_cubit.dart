@@ -59,4 +59,18 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
       emit(SalkhanaSuccsses(members: members));
     }
   }
+
+  void searshMember(String text) {
+    List<SalkhanaMemberModel> data = [];
+    if (text.isNotEmpty) {
+      for (var member in members) {
+        if (member.name.toLowerCase().startsWith(text.toLowerCase())) {
+          data.add(member);
+        }
+      }
+      emit(SalkhanaSuccsses(members: data));
+    } else {
+      filterMembers();
+    }
+  }
 }
