@@ -20,10 +20,10 @@ class AppThemes {
 
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    drawerTheme: DrawerThemeData(backgroundColor: Color(0xFF2A2D3E)),
-    canvasColor: Color(0xFF2A2D3E),
+    drawerTheme: DrawerThemeData(backgroundColor: Color(0xFF111111)),
+    canvasColor: Color(0xFF111111),
     primaryColor: Color(0xfffcad08),
-    scaffoldBackgroundColor: Color(0xFF212332),
+    scaffoldBackgroundColor: Color(0xFF1f1f1f),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
     ),

@@ -14,7 +14,7 @@ class DashboardAppBar extends StatelessWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Spacer(
-            flex: 2,
+            flex: 1,
           ),
           Expanded(
             child: Container(
@@ -29,38 +29,36 @@ class DashboardAppBar extends StatelessWidget {
                     Expanded(
                       flex: 6,
                       child: SizedBox(
-                        child: TextFormField(
+                        child: TextField(
                           decoration: InputDecoration(
                             hintText: "Search",
-                            border: InputBorder.none,
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(color: Colors.grey),
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColor)),
                           ),
+                          onChanged: (value) {
+                            if (value.isEmpty) {
+                            } else {}
+                          },
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: double.infinity,
-                          margin: EdgeInsets.symmetric(vertical: 5),
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Icon(
-                            Icons.search,
-                            color: Colors.grey[200],
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
             ),
           ),
-          SizedBox(
-            width: 20,
+          Spacer(
+            flex: 1,
           ),
           Container(
             padding: EdgeInsetsDirectional.symmetric(horizontal: 20),

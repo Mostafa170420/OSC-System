@@ -1,20 +1,21 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import '/firebase_options.dart';
+import 'core/constant/bloc_observer.dart';
 import 'core/theme/theme.dart';
 import 'features/salkhana/data/repositories/salkhana_repository_imp.dart';
 import 'features/salkhana/presentation/cubit/theme_cubit.dart';
 import 'features/salkhana/presentation/cubit/theme_states.dart';
 import 'features/salkhana/presentation/screens/dashboard_screen.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 
@@ -29,7 +30,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) =>
                 SalkhanaCubit(salkhanaRepository: SalkhanaRepositoryImp())
-                  ..getMembers()
                   ..getMembers()),
         BlocProvider(create: (_) => ThemeCubit()),
       ],
