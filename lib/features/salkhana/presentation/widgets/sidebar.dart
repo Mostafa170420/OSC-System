@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/sidebar_cubit.dart';
+import 'package:osc_system/features/salkhana/presentation/widgets/dashboard_details.dart';
+
+import '../screens/settings_screen.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    print('object');
     return Drawer(
       child: SingleChildScrollView(
         child: Column(
@@ -45,6 +50,14 @@ class DrawerListTile extends StatelessWidget {
       minTileHeight: 60,
       contentPadding: EdgeInsets.only(left: 20),
       onTap: () {
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => DashboardDetails(),
+        //     ));
+        if (screenIndex == 1) {
+          BlocProvider.of<SalkhanaCubit>(context).getMembers();
+        }
         BlocProvider.of<SidebarCubit>(context).changeScreen(screenIndex);
       },
       horizontalTitleGap: 30,

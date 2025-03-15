@@ -10,7 +10,15 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("Settings")),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Settings"),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back)),
+      ),
       drawer: Sidebar(),
       body: Center(
         child: ElevatedButton(

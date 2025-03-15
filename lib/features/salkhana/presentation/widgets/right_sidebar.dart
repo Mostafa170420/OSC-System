@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osc_system/core/constant/contant.dart';
+import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 
 class RightSidebar extends StatelessWidget {
   const RightSidebar({super.key});
@@ -32,7 +34,10 @@ class RightSidebar extends StatelessWidget {
                       ],
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    BlocProvider.of<SalkhanaCubit>(context)
+                        .changeCommittee(commities[i][1]);
+                  },
                 ),
               )
           ],

@@ -13,11 +13,11 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
   Future<Either<Failure, void>> addMember(
       SalkhanaMemberModel memberModel, String salkhanaSeason) async {
     try {
-      await FirebaseHelper.addDoc(
+      await SupabaseHelper.addDoc(
           "salkhana/$salkhanaSeason/${EndPoints.salkhanaMembers}",
           memberModel.id,
           memberModel.toFirestore());
-      return Right(0);
+      return Right(0 as Function(dynamic p1));
     } on FirebaseException catch (e) {
       return Left(Failure());
     }
@@ -27,11 +27,11 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
   Future<Either<Failure, void>> removeMember(
       String memberId, String salkhanaSeason) async {
     try {
-      await FirebaseHelper.removeDoc(
+      await SupabaseHelper.removeDoc(
         "salkhana/$salkhanaSeason/${EndPoints.salkhanaMembers}",
         memberId,
       );
-      return Right(0);
+      return Right(0 as Function(dynamic p1));
     } on FirebaseException catch (e) {
       return Left(Failure());
     }
@@ -41,11 +41,11 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
   Future<Either<Failure, void>> updateMember(
       SalkhanaMemberModel memberModel, String salkhanaSeason) async {
     try {
-      await FirebaseHelper.updateDoc(
+      await SupabaseHelper.updateDoc(
           "salkhana/$salkhanaSeason/${EndPoints.salkhanaMembers}",
           memberModel.id,
           memberModel.toFirestore());
-      return Right(0);
+      return Right(0 as Function(dynamic p1));
     } on FirebaseException catch (e) {
       return Left(Failure());
     }
@@ -55,13 +55,10 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
   Future<Either<Failure, Stream<List<SalkhanaMemberModel>>>> watchMembers(
       String salkhanaSeason) async {
     if (await InternetConnectionChecker.instance.hasConnection) {
-      return Right(FirebaseHelper.getAllDocStream(
-              "salkhana/Salkhana25/${EndPoints.salkhanaMembers}")
-          .map((event) => event.docs
-              .map(
-                (doc) => SalkhanaMemberModel.fromFirestore(doc),
-              )
-              .toList()));
+      return Right(
+        SupabaseHelper.getAllDocStream("").map((data) =>
+            data.map((e) => SalkhanaMemberModel.fromFirestore(e)).toList()),
+      );
     } else {
       return Left(Failure());
     }

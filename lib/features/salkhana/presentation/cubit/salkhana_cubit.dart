@@ -5,17 +5,22 @@ import '../../data/model/member.dart';
 import '../../domain/repositories/salkhana_repository.dart';
 import 'salkhana_states.dart';
 
-
 class SalkhanaCubit extends Cubit<SalkhanaStates> {
   SalkhanaCubit({required this.salkhanaRepository}) : super(SalkhanaLoading());
   SalkhanaRepository salkhanaRepository;
+  List<SalkhanaMemberModel> members = [];
+  String committee = "";
   String salkhanaSeason = "Salkhana25";
   static SalkhanaCubit get(context) => BlocProvider.of(context);
   void getMembers() async {
+    emit(SalkhanaLoading());
     salkhanaRepository.watchMembers(salkhanaSeason).fold(
         (failure) => emit(SalkhanaFailureNetwork()),
         (succsses) => succsses.listen(
-              (members) => emit(SalkhanaSuccsses(members: members)),
+              (data) {
+                members = data;
+                filterMembers();
+              },
             ));
   }
 
@@ -35,5 +40,23 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
     await salkhanaRepository.updateMember(memberModel, salkhanaSeason).fold(
         (failure) => emit(SalkhanaFailureFirestore()),
         (succsses) => emit(SalkhanaSuccssesFirestore()));
+  }
+
+  void changeCommittee(String committeeName) {
+    committee = committeeName;
+    filterMembers();
+  }
+
+  void filterMembers() {
+    List<SalkhanaMemberModel> data = [];
+    if (committee.isNotEmpty) {
+      for (var member in members) {
+        if (member.committee1 == committee || member.committee2 == committee)
+          data.add(member);
+        emit(SalkhanaSuccsses(members: data));
+      }
+    } else {
+      emit(SalkhanaSuccsses(members: members));
+    }
   }
 }

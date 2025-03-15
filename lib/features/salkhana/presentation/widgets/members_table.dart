@@ -13,6 +13,8 @@ class MembersTable extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<SalkhanaCubit, SalkhanaStates>(
+      buildWhen: (previous, current) =>
+          current is SalkhanaLoading || current is SalkhanaSuccsses,
       builder: (context, state) {
         print(state);
         return Container(
@@ -35,59 +37,74 @@ class MembersTable extends StatelessWidget {
               ),
               Expanded(
                 child: Skeletonizer(
-                  enabled: (state is SalkhanaSuccsses) ? false : true,
+                  enabled: (state is SalkhanaSuccsses ||
+                          state is SalkhanaSuccssesFirestore)
+                      ? false
+                      : true,
                   child: ListView(
                     children: [
                       SizedBox(
                         width: double.infinity,
-                        child: DataTable(
-                          columns: [
-                            DataColumn(
-                              headingRowAlignment: MainAxisAlignment.center,
-                              label: Text(
-                                "Name",
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                        child: FittedBox(
+                          child: DataTable(
+                            columns: [
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
+                                  "Name",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
                               ),
-                            ),
-                            DataColumn(
-                              headingRowAlignment: MainAxisAlignment.center,
-                              label: Text(
-                                "Phone",
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
+                                  "Phone",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
                               ),
-                            ),
-                            DataColumn(
-                              headingRowAlignment: MainAxisAlignment.center,
-                              label: Text(
-                                "Committee 1",
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
+                                  "Committee 1",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
                               ),
-                            ),
-                            DataColumn(
-                              headingRowAlignment: MainAxisAlignment.center,
-                              label: Text(
-                                "Committee 2",
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
+                                  "Committee 2",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
                               ),
-                            ),
-                          ],
-                          rows: _buildTableRows(
-                              context,
-                              (state is SalkhanaSuccsses)
-                                  ? state.members
-                                  : faceList),
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
+                                  "Actions",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              ),
+                            ],
+                            rows: _buildTableRows(
+                                context,
+                                (state is SalkhanaSuccsses)
+                                    ? state.members
+                                    : faceList),
+                          ),
                         ),
                       )
                     ],
@@ -132,6 +149,31 @@ class MembersTable extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
               )),
+              DataCell(Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                    onPressed: () {
+                      member.attendanceDate =
+                          member.attendanceDate.isEmpty ? "attend" : "";
+                      BlocProvider.of<SalkhanaCubit>(context)
+                          .updateMember(member);
+                    },
+                    child: member.attendanceDate.isEmpty
+                        ? Text("not Attend",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(color: Colors.red))
+                        : Text("Attend",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(color: Colors.green)),
+                  )
+                ],
+              ))),
             ],
           ),
         )
@@ -139,7 +181,7 @@ class MembersTable extends StatelessWidget {
   }
 
   List<SalkhanaMemberModel> faceList = List.generate(
-    15,
+    5,
     (index) => SalkhanaMemberModel(
         id: "5",
         name: "Mostafa Ahmed",
@@ -149,6 +191,7 @@ class MembersTable extends StatelessWidget {
         college: "college",
         committee1: "committee1",
         committee2: "committee2",
+        attendanceDate: "sdf",
         resultCommittee1: "resultCommittee1",
         resultCommittee2: "resultCommittee2",
         emailSent: false),
