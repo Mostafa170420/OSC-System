@@ -13,10 +13,6 @@ class Sidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     print('object');
     return Drawer(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(30), topRight: Radius.circular(30)),
-      ),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -51,10 +47,6 @@ class DrawerListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-      ),
-      hoverColor: Theme.of(context).primaryColor.withOpacity(0.2),
       minTileHeight: 60,
       contentPadding: EdgeInsets.only(left: 20),
       onTap: () {
@@ -63,9 +55,7 @@ class DrawerListTile extends StatelessWidget {
         //     MaterialPageRoute(
         //       builder: (context) => DashboardDetails(),
         //     ));
-        if (screenIndex == 1) {
-          BlocProvider.of<SalkhanaCubit>(context).getMembers();
-        }
+        BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
         BlocProvider.of<SidebarCubit>(context).changeScreen(screenIndex);
       },
       horizontalTitleGap: 30,

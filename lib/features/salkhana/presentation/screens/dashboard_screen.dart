@@ -3,15 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_states.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/sidebar_cubit.dart';
+import 'package:osc_system/features/salkhana/presentation/widgets/member_table.dart';
 import '../../../../core/responsive.dart';
 import '../widgets/dashboard_details.dart';
+import '../widgets/members_info_table.dart';
+import '../widgets/members_table.dart';
 import '../widgets/sidebar.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-  static const List<Widget> screens = [
+  DashboardScreen({super.key});
+  List<Widget> screens = [
     DashboardDetails(),
-    Scaffold(),
+    MembersInfoTable(),
     Scaffold(),
   ];
   @override

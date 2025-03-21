@@ -4,14 +4,18 @@ import 'package:osc_system/core/responsive.dart';
 import 'package:osc_system/features/salkhana/data/model/member.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_states.dart';
+import 'package:osc_system/features/salkhana/presentation/widgets/add_member_dialog.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constant/content.dart';
 
-class MembersTable extends StatelessWidget {
-  MembersTable({super.key});
+class MembersInfoTable extends StatelessWidget {
+  MembersInfoTable({super.key});
+  var dropdownTitle = "Flutter";
   @override
   Widget build(BuildContext context) {
+    dropdownTitle = "Flutter";
+
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<SalkhanaCubit, SalkhanaStates>(
       buildWhen: (previous, current) =>
@@ -35,6 +39,27 @@ class MembersTable extends StatelessWidget {
                     context,
                   ).textTheme.titleLarge?.copyWith(fontSize: 25),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: size.width / 5,
+                    child: DropdownButton(
+                        isExpanded: true,
+                        iconEnabledColor: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(10),
+                        menuWidth: 300,
+                        value: dropdownTitle,
+                        items: items,
+                        style: TextStyle(),
+                        onChanged: (value) {
+                          dropdownTitle = value;
+                          BlocProvider.of<SalkhanaCubit>(context)
+                              .changeCommittee(value);
+                        }),
+                  ),
+                ],
               ),
               Expanded(
                 child: Skeletonizer(
@@ -73,6 +98,16 @@ class MembersTable extends StatelessWidget {
                               DataColumn(
                                 headingRowAlignment: MainAxisAlignment.center,
                                 label: Text(
+                                  "Email",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              ),
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
                                   "Committee 1",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
@@ -84,6 +119,16 @@ class MembersTable extends StatelessWidget {
                                 headingRowAlignment: MainAxisAlignment.center,
                                 label: Text(
                                   "Committee 2",
+                                  overflow: TextOverflow.clip,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              ),
+                              DataColumn(
+                                headingRowAlignment: MainAxisAlignment.center,
+                                label: Text(
+                                  "Attendance",
                                   overflow: TextOverflow.clip,
                                   maxLines: 1,
                                   style: TextStyle(
@@ -140,6 +185,13 @@ class MembersTable extends StatelessWidget {
                 ),
               )),
               DataCell(Center(
+                child: Text(
+                  member.email,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              )),
+              DataCell(Center(
                   child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset(committees[0][0]),
@@ -176,11 +228,61 @@ class MembersTable extends StatelessWidget {
                   )
                 ],
               ))),
+              DataCell(Center(
+                  child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PopupMenuButton(
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text("Remove"),
+                        onTap: () => BlocProvider.of<SalkhanaCubit>(context)
+                            .removeMember(member.id),
+                      ),
+                      PopupMenuItem(
+                        child: Text("Update"),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              backgroundColor: Color(0xFF212332),
+                              content: AddMemberDialog(),
+                            ),
+                          );
+                        },
+                      )
+                    ],
+                  )
+                ],
+              ))),
             ],
           ),
         )
         .toList();
   }
+
+  List<DropdownMenuItem> items = List.generate(
+    committees.length,
+    (index) => DropdownMenuItem(
+      value: committees[index][1],
+      child: Row(
+        children: [
+          Flexible(
+              child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Image.asset(committees[index][0]),
+          )),
+          Flexible(
+            child: Text(
+              committees[index][1],
+              style: TextStyle(color: Colors.white),
+              maxLines: 1,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 
   List<SalkhanaMemberModel> faceList = List.generate(
     5,

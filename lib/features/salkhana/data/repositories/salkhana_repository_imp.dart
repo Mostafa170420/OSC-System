@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -18,7 +17,7 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
           memberModel.id,
           memberModel.toFirestore());
       return Right(0);
-    } on FirebaseException catch (e) {
+    } catch (e) {
       return Left(Failure());
     }
   }
@@ -32,7 +31,7 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
         memberId,
       );
       return Right(0);
-    } on FirebaseException catch (e) {
+    } catch (e) {
       return Left(Failure());
     }
   }
@@ -46,7 +45,7 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
           memberModel.id,
           memberModel.toFirestore());
       return Right(0);
-    } on FirebaseException catch (e) {
+    } catch (e) {
       return Left(Failure());
     }
   }

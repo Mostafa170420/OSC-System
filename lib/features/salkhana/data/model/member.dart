@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class SalkhanaMemberModel {
   final String id;
   final String name;

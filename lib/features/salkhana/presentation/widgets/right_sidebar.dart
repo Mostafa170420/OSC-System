@@ -18,7 +18,6 @@ class RightSidebar extends StatelessWidget {
             for (int i = 0; i < committees.length; i++)
               Expanded(
                 child: MaterialButton(
-                  hoverColor: Theme.of(context).primaryColor.withOpacity(0.2),
                   color: Theme.of(context).canvasColor,
                   minWidth: double.infinity,
                   shape: RoundedRectangleBorder(

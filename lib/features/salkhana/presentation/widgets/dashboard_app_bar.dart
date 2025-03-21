@@ -20,7 +20,7 @@ class DashboardAppBar extends StatelessWidget {
             ),
           ),
           Spacer(
-            flex: 1,
+            flex: 2,
           ),
           Expanded(
             child: Container(
@@ -42,33 +42,35 @@ class DashboardAppBar extends StatelessWidget {
                                   .searshMember(value),
                           decoration: InputDecoration(
                             hintText: "Search",
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(color: Colors.grey),
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).primaryColor)),
+                            border: InputBorder.none,
                           ),
-                          // onChanged: (value) {
-                          //   if (value.isEmpty) {
-                          //   } else {}
-                          // },
                         ),
                       ),
                     ),
+                    Expanded(
+                      flex: 2,
+                      child: InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: double.infinity,
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.grey[200],
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
             ),
           ),
-          Spacer(
-            flex: 1,
+          SizedBox(
+            width: 20,
           ),
           Flexible(
             child: Container(
