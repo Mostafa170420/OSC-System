@@ -23,6 +23,7 @@ class MembersInfoTable extends StatelessWidget {
       builder: (context, state) {
         print(state);
         return Container(
+          margin: EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Theme.of(context).canvasColor,
             borderRadius: BorderRadius.circular(10),
