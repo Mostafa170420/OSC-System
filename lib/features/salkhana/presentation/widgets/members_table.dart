@@ -10,7 +10,7 @@ import '../../../../core/constant/content.dart';
 
 class MembersTable extends StatelessWidget {
   MembersTable({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

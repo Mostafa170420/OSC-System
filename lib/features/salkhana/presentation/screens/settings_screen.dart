@@ -19,7 +19,6 @@ class SettingsScreen extends StatelessWidget {
             },
             icon: Icon(Icons.arrow_back)),
       ),
-      drawer: Sidebar(),
       body: Center(
         child: ElevatedButton(
           onPressed: () => context.read<ThemeCubit>().toggleTheme(),

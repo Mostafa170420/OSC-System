@@ -1,4 +1,5 @@
 class SalkhanaMemberModel {
+  int? indexAtDb;
   final String id;
   final String name;
   final String email;
@@ -34,6 +35,23 @@ class SalkhanaMemberModel {
       emailSent: data['email_sent'] ?? false,
     );
   }
+  SalkhanaMemberModel.fromHive({
+    required this.indexAtDb,
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.academicYear,
+    required this.college,
+    required this.committee1,
+    required this.committee2,
+    required this.resultCommittee1,
+    required this.resultCommittee2,
+    this.rejectionReasonCommittee1,
+    this.rejectionReasonCommittee2,
+    required this.attendanceDate,
+    required this.emailSent,
+  });
 
   // 🔥 Convert Member object back to Firestore format
   Map<String, dynamic> toFirestore() {

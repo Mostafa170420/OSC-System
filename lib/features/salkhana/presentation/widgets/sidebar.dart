@@ -1,74 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/core/responsive.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/sidebar_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/widgets/dashboard_details.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:sidebarx/sidebarx.dart';
 
 import '../screens/settings_screen.dart';
 
 class Sidebar extends StatelessWidget {
-  const Sidebar({super.key});
+  const Sidebar({super.key, required this.controller});
+  final SidebarXController controller;
 
   @override
   Widget build(BuildContext context) {
-    print('object');
-    return Drawer(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            DrawerHeader(
-              padding: EdgeInsets.all(25),
-              child: Image.asset("assets/images/OSC_logo.png"),
-            ),
-            DrawerListTile(
-                icon: Icons.dashboard, title: "Dashboard", screenIndex: 0),
-            DrawerListTile(
-                icon: Icons.people, title: "Members", screenIndex: 1),
-            DrawerListTile(
-                icon: Icons.settings, title: "Settings", screenIndex: 2)
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DrawerListTile extends StatelessWidget {
-  const DrawerListTile({
-    super.key,
-    required this.icon,
-    required this.title,
-    this.screenIndex,
-  });
-  final IconData icon;
-  final String title;
-  final screenIndex;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      minTileHeight: 60,
-      contentPadding: EdgeInsets.only(left: 20),
-      onTap: () {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => DashboardDetails(),
-        //     ));
-        BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
-        BlocProvider.of<SidebarCubit>(context).changeScreen(screenIndex);
+    Size size = MediaQuery.of(context).size;
+    return SidebarX(
+      controller: controller,
+      headerBuilder: (context, extended) {
+        return DrawerHeader(
+          child: Stack(
+            fit: StackFit.passthrough,
+            children: [
+              Image.asset("assets/images/OSC_logo.png"),
+              Shimmer.fromColors(
+                enabled: true,
+                period: Duration(seconds: 2),
+                baseColor: Colors.transparent,
+                highlightColor: Colors.white38,
+                child: Image.asset("assets/images/OSC_logo.png"),
+              ),
+            ],
+          ),
+        );
       },
-      horizontalTitleGap: 30,
-      leading: Icon(
-        icon,
-        color: Theme.of(context).primaryColor,
-      ),
-      title: Text(
-        title,
-        maxLines: 1,
-        overflow: TextOverflow.clip,
-        style: Theme.of(context).textTheme.labelMedium,
-      ),
+      extendedTheme: SidebarXTheme(
+          width:
+              Responsive.isDesktop(context) ? size.width / 5 : size.width / 3),
+      theme: SidebarXTheme(
+          selectedItemDecoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.6),
+              borderRadius: BorderRadius.circular(10)),
+          itemTextPadding: EdgeInsets.symmetric(horizontal: 25),
+          selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 25),
+          textStyle: Theme.of(context).textTheme.labelMedium,
+          hoverTextStyle: Theme.of(context).textTheme.labelMedium,
+          selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor),
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          iconTheme: IconThemeData(color: Colors.white)),
+      items: [
+        SidebarXItem(
+          icon: Icons.dashboard,
+          label: "Dashboard",
+          onTap: () {
+            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+            BlocProvider.of<SidebarCubit>(context).changeScreen(0);
+          },
+        ),
+        SidebarXItem(
+          icon: Icons.people,
+          label: "Members",
+          onTap: () {
+            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+            BlocProvider.of<SidebarCubit>(context).changeScreen(1);
+          },
+        ),
+        SidebarXItem(icon: Icons.settings, label: "Settings")
+      ],
     );
   }
 }

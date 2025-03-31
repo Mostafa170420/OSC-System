@@ -34,11 +34,60 @@ class MembersInfoTable extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Text(
-                  "Members",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontSize: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        "Members",
+                        maxLines: 1,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleLarge?.copyWith(fontSize: 25),
+                      ),
+                    ),
+                    Flexible(
+                      child: SizedBox(
+                        height: 55,
+                        width: 150,
+                        child: MaterialButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                backgroundColor: Color(0xFF212332),
+                                content: AddMemberDialog(),
+                              ),
+                            );
+                          },
+                          color: Color(0xffef7905),
+                          height: 55,
+                          minWidth: 150,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person_add_alt_1_outlined,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Add New",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(fontSize: 20),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               Row(
@@ -193,17 +242,45 @@ class MembersInfoTable extends StatelessWidget {
                 ),
               )),
               DataCell(Center(
-                  child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Image.asset(committees[0][0]),
+                  child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    child: Image.asset(
+                      committeeImagePath(member.committee1),
+                      width: 30,
+                    ),
+                  ),
+                  Text(
+                    member.committee1,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ],
               ))),
               DataCell(Center(
-                child: Text(
-                  member.committee2,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
+                  child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    child: Image.asset(
+                      committeeImagePath(member.committee2),
+                      width: 30,
+                    ),
+                  ),
+                  Text(
+                    member.committee2,
+                    maxLines: 1,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
+                ],
+              ))),
               DataCell(Center(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -247,7 +324,9 @@ class MembersInfoTable extends StatelessWidget {
                             context: context,
                             builder: (context) => AlertDialog(
                               backgroundColor: Color(0xFF212332),
-                              content: AddMemberDialog(),
+                              content: AddMemberDialog(
+                                member: member,
+                              ),
                             ),
                           );
                         },
@@ -284,6 +363,14 @@ class MembersInfoTable extends StatelessWidget {
       ),
     ),
   );
+
+  String committeeImagePath(String name) {
+    String path = '';
+    for (var element in committees) {
+      if (element[1] == name) path = element[0];
+    }
+    return path;
+  }
 
   List<SalkhanaMemberModel> faceList = List.generate(
     5,

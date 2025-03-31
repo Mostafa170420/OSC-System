@@ -41,6 +41,12 @@ dependencies:
   google_fonts: ^6.2.1
   skeletonizer: ^1.4.3
   supabase_flutter: ^2.8.4
+  sidebarx: ^0.17.1
+  gradient_coloured_buttons: ^0.1.0
+  flutter_animated_button: ^2.0.4
+  shimmer: ^3.0.0
+  hive_ce: ^2.10.1
+  hive_ce_flutter: ^2.2.0
 
 
 dev_dependencies:

@@ -61,7 +61,7 @@ class AddMemberDialog extends StatelessWidget {
                       title: "Id",
                       icon: Icons.numbers,
                       controller: id,
-                      readOnly: true,
+                      readOnly: (member == null) ? false : true,
                       validator: CustomValidator.validator,
                     )),
                     SizedBox(

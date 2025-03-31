@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_ce_flutter/adapters.dart';
+import 'package:osc_system/features/salkhana/data/model/member_type_adaptor.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'core/theme/theme.dart';
 import 'features/salkhana/data/repositories/salkhana_repository_imp.dart';
+import 'features/salkhana/presentation/cubit/sidebar_cubit.dart';
 import 'features/salkhana/presentation/cubit/theme_cubit.dart';
 import 'features/salkhana/presentation/screens/dashboard_screen.dart';
 
@@ -26,6 +29,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => SidebarCubit(),
+        ),
         BlocProvider(
             create: (context) =>
                 SalkhanaCubit(salkhanaRepository: SalkhanaRepositoryImp())
