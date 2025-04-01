@@ -19,6 +19,7 @@ class RightSidebar extends StatelessWidget {
               Expanded(
                 child: MaterialButton(
                   color: Theme.of(context).canvasColor,
+                  hoverColor: Theme.of(context).primaryColor,
                   minWidth: double.infinity,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),

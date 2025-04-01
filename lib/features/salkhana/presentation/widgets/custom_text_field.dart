@@ -22,7 +22,7 @@ class CustomTextField extends StatelessWidget {
       cursorColor: Theme.of(context).primaryColor,
       decoration: InputDecoration(
           hintText: title,
-          fillColor: Theme.of(context).canvasColor,
+          fillColor: Theme.of(context).cardColor,
           filled: true,
           prefixIcon: Icon(
             icon,

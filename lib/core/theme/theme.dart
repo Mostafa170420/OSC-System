@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 class AppThemes {
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    dialogBackgroundColor: Color(0xFF212332),
-    drawerTheme: DrawerThemeData(backgroundColor: Color(0xFF2A2D3E)),
-    canvasColor: Color(0xFF2A2D3E),
+    cardColor: Color(0xff1a1a1a),
+    useMaterial3: true,
+    dialogBackgroundColor: Color(0xFF2a2a2a),
+    drawerTheme: DrawerThemeData(backgroundColor: Color(0xFF2c2c2c)),
+    canvasColor: Color(0xFF2c2c2c),
     primaryColor: Color(0xfffcad08),
-    scaffoldBackgroundColor: Color(0xFF212332),
+    scaffoldBackgroundColor: Color(0xFF1f1f1f),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
     ),

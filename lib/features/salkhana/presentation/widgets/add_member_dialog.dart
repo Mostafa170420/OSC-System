@@ -148,7 +148,7 @@ class AddMemberDialog extends StatelessWidget {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Theme.of(context).canvasColor,
+                                    color: Theme.of(context).cardColor,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: BlocBuilder<DropDownCubit, int>(
                                   builder: (context, state) {
@@ -191,7 +191,7 @@ class AddMemberDialog extends StatelessWidget {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Theme.of(context).canvasColor,
+                                    color: Theme.of(context).cardColor,
                                     borderRadius: BorderRadius.circular(15)),
                                 child: BlocBuilder<DropDownCubit, int>(
                                   builder: (context, state) {
@@ -234,7 +234,7 @@ class AddMemberDialog extends StatelessWidget {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
-                                          Text("Take at lest 1 commttee")));
+                                          Text("Take at least 1 committee")));
                             } else {
                               SalkhanaCubit.get(context).addMember(
                                   SalkhanaMemberModel(

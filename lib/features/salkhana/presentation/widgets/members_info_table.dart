@@ -48,39 +48,47 @@ class MembersInfoTable extends StatelessWidget {
                     ),
                     Flexible(
                       child: SizedBox(
-                        height: 55,
-                        width: 150,
+                        height: 45,
+                        width: 140,
                         child: MaterialButton(
                           onPressed: () {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                backgroundColor: Color(0xFF212332),
+                                backgroundColor:
+                                    Theme.of(context).dialogBackgroundColor,
                                 content: AddMemberDialog(),
                               ),
                             );
                           },
-                          color: Color(0xffef7905),
-                          height: 55,
-                          minWidth: 150,
+                          color: Theme.of(context).primaryColor,
+                          elevation: 5,
+                          height: 50,
+                          minWidth: 160,
+                          hoverColor: Colors.green,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                           child: FittedBox(
                             child: Row(
                               children: [
                                 Icon(
                                   Icons.person_add_alt_1_outlined,
+                                  color: Colors.white,
+                                  size: 24,
                                 ),
-                                SizedBox(
-                                  width: 5,
-                                ),
+                                SizedBox(width: 8),
                                 Text(
                                   "Add New",
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
-                                      ?.copyWith(fontSize: 20),
-                                )
+                                      ?.copyWith(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                ),
                               ],
                             ),
                           ),
@@ -93,14 +101,34 @@ class MembersInfoTable extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3), // Shadow color
+                          blurRadius: 10, // Spread of the shadow
+                          offset: Offset(0, 5), // Position of the shadow
+                        ),
+                      ],
+                      color: Theme.of(context).cardColor,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Theme.of(context)
+                            .primaryColor
+                            .withOpacity(0.2), // Border color
+                        width: 1, // Border width
+                      ),
+                    ),
                     width: size.width / 5,
                     child: DropdownButton(
+                        underline: SizedBox(),
+                        dropdownColor: Theme.of(context).cardColor,
                         isExpanded: true,
                         iconEnabledColor: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(10),
                         menuWidth: 300,
                         value: dropdownTitle,
+                        alignment: AlignmentDirectional.center,
                         items: items,
                         style: TextStyle(),
                         onChanged: (value) {
@@ -311,28 +339,101 @@ class MembersInfoTable extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PopupMenuButton(
+                    splashRadius: 30,
+                    tooltip: "More Actions",
+                    icon: Icon(
+                      Icons.more_vert,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    color: Theme.of(context).cardColor,
                     itemBuilder: (context) => [
                       PopupMenuItem(
-                        child: Text("Remove"),
-                        onTap: () => BlocProvider.of<SalkhanaCubit>(context)
-                            .removeMember(member.id),
-                      ),
-                      PopupMenuItem(
-                        child: Text("Update"),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              backgroundColor: Color(0xFF212332),
-                              content: AddMemberDialog(
-                                member: member,
+                        value: 'remove',
+                        child: Row(
+                          children: [
+                            Icon(Icons.delete, color: Colors.red),
+                            SizedBox(width: 10),
+                            Text(
+                              "Remove",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          );
-                        },
-                      )
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'update',
+                        child: Row(
+                          children: [
+                            Icon(Icons.edit,
+                                color: Theme.of(context).primaryColor),
+                            SizedBox(width: 10),
+                            Text(
+                              "Update",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'details',
+                        child: Row(
+                          children: [
+                            Icon(Icons.info, color: Colors.blue),
+                            SizedBox(width: 10),
+                            Text(
+                              "Details",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
-                  )
+                    onSelected: (value) {
+                      if (value == 'remove') {
+                        BlocProvider.of<SalkhanaCubit>(context)
+                            .removeMember(member.id);
+                      } else if (value == 'update') {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            backgroundColor:
+                                Theme.of(context).dialogBackgroundColor,
+                            content: AddMemberDialog(
+                              member: member,
+                            ),
+                          ),
+                        );
+                      } else if (value == 'details') {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            backgroundColor:
+                                Theme.of(context).dialogBackgroundColor,
+                            title: Text("Member Details"),
+                            content: Text(
+                              "Name: ${member.name}\nPhone: ${member.phone}\nEmail: ${member.email}",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ))),
             ],
@@ -344,6 +445,7 @@ class MembersInfoTable extends StatelessWidget {
   List<DropdownMenuItem> items = List.generate(
     committees.length,
     (index) => DropdownMenuItem(
+      alignment: AlignmentDirectional.center,
       value: committees[index][1],
       child: Row(
         children: [
