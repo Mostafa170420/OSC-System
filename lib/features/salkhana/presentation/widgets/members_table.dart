@@ -74,7 +74,7 @@ class MembersTable extends StatelessWidget {
                           menuWidth: 300,
                           value: dropdownTitle,
                           alignment: AlignmentDirectional.center,
-                          items: items,
+                          items: generateItems(context),
                           style: TextStyle(),
                           onChanged: (value) {
                             dropdownTitle = value;
@@ -268,7 +268,7 @@ class MembersTable extends StatelessWidget {
         .toList();
   }
 
-  List<DropdownMenuItem> items = List.generate(
+  List<DropdownMenuItem> generateItems(BuildContext context) => List.generate(
     committees.length,
     (index) => DropdownMenuItem(
       alignment: AlignmentDirectional.center,
@@ -283,7 +283,7 @@ class MembersTable extends StatelessWidget {
           Flexible(
             child: Text(
               committees[index][1],
-              style: TextStyle(color: Colors.white),
+              style: Theme.of(context).textTheme.labelMedium,
               maxLines: 1,
             ),
           ),
