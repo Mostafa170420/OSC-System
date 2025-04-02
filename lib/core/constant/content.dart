@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+
 
 List committees = [
   ["assets/images/icons8-flutter-logo-100.png", "Flutter"],
@@ -6,7 +6,8 @@ List committees = [
   ["assets/images/front-end-programming.png", "Front-End"],
   ["assets/images/ui.png", "UI-UX"],
   ["assets/images/linux-tux-svgrepo-com.png", "Linux"],
-  ["assets/images/icons8-blender-100.png", "Blender"]
+  ["assets/images/icons8-blender-100.png", "Blender"],
+  ["assets/images/all.png", ""]
 ];
 
 class CustomValidator {

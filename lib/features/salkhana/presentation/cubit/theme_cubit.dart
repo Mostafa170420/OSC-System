@@ -15,6 +15,8 @@ class ThemeCubit extends Cubit<ThemeState> {
   }
 
   ThemeData get currentTheme {
-    return AppThemes.darkTheme;
+  return state is LightThemeState
+      ? AppThemes.lightTheme
+      : AppThemes.darkTheme;
   }
 }

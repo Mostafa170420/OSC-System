@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:osc_system/features/salkhana/presentation/cubit/sidebar_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/screens/mobile/dashboard.dart';
-import 'package:sidebarx/sidebarx.dart';
+
 import '../../../../core/responsive.dart';
 import '../widgets/dashboard_details.dart';
 import '../widgets/members_info_table.dart';
 import '../widgets/sidebar.dart';
+import 'settings_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
@@ -14,7 +15,7 @@ class DashboardScreen extends StatelessWidget {
   static List<Widget> screens = [
     DashboardDetails(),
     MembersInfoTable(),
-    Scaffold(),
+    SettingsScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,5 @@ class DashboardScreen extends StatelessWidget {
         ],
       ),
     );
-    
   }
 }

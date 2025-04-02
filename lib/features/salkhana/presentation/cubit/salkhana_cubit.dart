@@ -14,14 +14,19 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
   static SalkhanaCubit get(context) => BlocProvider.of(context);
   void getMembers() async {
     emit(SalkhanaLoading());
-    salkhanaRepository.watchMembers(salkhanaSeason).fold(
-        (failure) => emit(SalkhanaFailureNetwork()),
-        (succsses) => succsses.listen(
-              (data) {
-                members = data;
-                filterMembers();
-              },
-            ));
+    try {
+      salkhanaRepository.watchMembers(salkhanaSeason).fold(
+          (failure) => emit(SalkhanaFailureNetwork()),
+          (succsses) => succsses.listen(
+                (data) {
+                  members = data;
+                  filterMembers();
+                },
+              ));
+    } on Exception catch (e) {
+      emit(SalkhanaFailureNetwork());
+      
+    }
   }
 
   void addMember(SalkhanaMemberModel memberModel) async {
@@ -51,8 +56,9 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
     List<SalkhanaMemberModel> data = [];
     if (committee.isNotEmpty) {
       for (var member in members) {
-        if (member.committee1 == committee || member.committee2 == committee)
+        if (member.committee1 == committee || member.committee2 == committee) {
           data.add(member);
+        }
         emit(SalkhanaSuccsses(members: data));
       }
     } else {
@@ -60,7 +66,7 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
     }
   }
 
-  void searshMember(String text) {
+  void searchMember(String text) {
     List<SalkhanaMemberModel> data = [];
     if (text.isNotEmpty) {
       for (var member in members) {

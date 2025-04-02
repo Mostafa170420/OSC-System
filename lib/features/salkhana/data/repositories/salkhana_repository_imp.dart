@@ -54,10 +54,13 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
   Future<Either<Failure, Stream<List<SalkhanaMemberModel>>>> watchMembers(
       String salkhanaSeason) async {
     if (await InternetConnectionChecker.instance.hasConnection) {
-      return Right(
-        SupabaseHelper.getAllDocStream("").map((data) =>
-            data.map((e) => SalkhanaMemberModel.fromFirestore(e)).toList()),
-      );
+      try {
+        var stream = SupabaseHelper.getAllDocStream("").map((data) =>
+            data.map((e) => SalkhanaMemberModel.fromFirestore(e)).toList());
+        return Right(stream);
+      } on Exception catch (e) {
+        rethrow;
+      }
     } else {
       return Left(Failure());
     }

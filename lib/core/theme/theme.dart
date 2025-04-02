@@ -2,6 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
+    static final ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Colors.amber,
+    scaffoldBackgroundColor: Colors.white,
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.amber,
+      foregroundColor: Colors.black,
+    ),
+ 
+    drawerTheme: DrawerThemeData(backgroundColor: Colors.black),
+     textTheme: TextTheme(
+        labelMedium: GoogleFonts.nunito(
+          fontWeight: FontWeight.w700,
+          fontSize: 20,
+          color: Colors.grey[900],
+        ),
+        labelSmall: GoogleFonts.nunito(
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+          color: Colors.grey[900],
+        ),
+        titleLarge: GoogleFonts.nunito(
+          fontWeight: FontWeight.w600,
+          fontSize: 30,
+          color: Colors.black,
+        )),
+  );
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     cardColor: Color(0xff1a1a1a),

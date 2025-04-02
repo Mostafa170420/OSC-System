@@ -34,7 +34,7 @@ class DashboardAppBar extends StatelessWidget {
                         controller: text,
                         onChanged: (value) =>
                             BlocProvider.of<SalkhanaCubit>(context)
-                                .searshMember(value),
+                                .searchMember(value),
                         decoration: InputDecoration(
                           hintText: "Search",
                           hintStyle: TextStyle(

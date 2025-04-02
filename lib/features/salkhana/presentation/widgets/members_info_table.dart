@@ -8,13 +8,14 @@ import 'package:osc_system/features/salkhana/presentation/widgets/add_member_dia
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constant/content.dart';
+import '../../../../core/constant/functions.dart';
 
 class MembersInfoTable extends StatelessWidget {
   MembersInfoTable({super.key});
-  var dropdownTitle = "Flutter";
+  var dropdownTitle = "";
   @override
   Widget build(BuildContext context) {
-    dropdownTitle = "Flutter";
+   
 
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<SalkhanaCubit, SalkhanaStates>(
@@ -150,7 +151,7 @@ class MembersInfoTable extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: FittedBox(
-                          fit: BoxFit.scaleDown,
+                          fit: BoxFit.cover,
                           child: DataTable(
                             columns: [
                               DataColumn(
@@ -466,13 +467,7 @@ class MembersInfoTable extends StatelessWidget {
     ),
   );
 
-  String committeeImagePath(String name) {
-    String path = '';
-    for (var element in committees) {
-      if (element[1] == name) path = element[0];
-    }
-    return path;
-  }
+
 
   List<SalkhanaMemberModel> faceList = List.generate(
     5,

@@ -305,7 +305,7 @@ class AddMemberDialog extends StatelessWidget {
   }
 
   List<DropdownMenuItem> items = List.generate(
-    committees.length,
+    committees.length-1,
     (index) => DropdownMenuItem(
       value: committees[index][1],
       child: Row(

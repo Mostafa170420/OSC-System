@@ -17,7 +17,9 @@ class DesktopDashboardDetails extends StatelessWidget {
             child: MembersTable(),
           ),
         ),
-        Expanded(child: RightSidebar())
+        Expanded(
+          child: RightSidebar(),
+        ),
       ],
     );
   }

@@ -71,7 +71,10 @@ class Sidebar extends StatelessWidget {
             BlocProvider.of<SidebarCubit>(context).changeScreen(1);
           },
         ),
-        SidebarXItem(icon: Icons.settings, label: "Settings")
+        SidebarXItem(icon: Icons.settings, label: "Settings",onTap: () {
+           BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+            BlocProvider.of<SidebarCubit>(context).changeScreen(2);
+        },)
       ],
     );
   }
