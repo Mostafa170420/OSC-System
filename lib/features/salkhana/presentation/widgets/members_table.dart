@@ -191,46 +191,52 @@ class MembersTable extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
               )),
-              DataCell(Center(
-                  child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    child: Image.asset(
-                      committeeImagePath(member.committee1),
-                      width: 30,
+              DataCell(
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 5),
+                      child: Image.asset(
+                        committeeImagePath(member.committee1),
+                        width: 30,
+                      ),
                     ),
-                  ),
-                  Text(
-                    member.committee1,
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-              ))),
-              DataCell(Center(
-                  child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    child: Image.asset(
-                      committeeImagePath(member.committee2),
-                      width: 30,
+                    Flexible(
+                      child: Text(
+                        member.committee1,
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
                     ),
-                  ),
-                  Text(
-                    member.committee2,
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-              ))),
+                  ],
+                ),
+              ),
+              DataCell(
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 5),
+                      child: Image.asset(
+                        committeeImagePath(member.committee2),
+                        width: 30,
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        member.committee2,
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               DataCell(Center(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

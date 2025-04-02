@@ -29,6 +29,7 @@ class AddMemberDialog extends StatelessWidget {
         TextEditingController(text: (member == null) ? "" : member!.college);
     final TextEditingController interviewDate = TextEditingController(
         text: (member == null) ? "" : member!.attendanceDate);
+    final List<DropdownMenuItem> items = generateItems(context);
     return BlocProvider(
       create: (context) => DropDownCubit(),
       child: SizedBox(
@@ -304,28 +305,30 @@ class AddMemberDialog extends StatelessWidget {
     );
   }
 
-  List<DropdownMenuItem> items = List.generate(
-    committees.length-1,
-    (index) => DropdownMenuItem(
-      value: committees[index][1],
-      child: Row(
-        children: [
-          Flexible(
-              child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image.asset(committees[index][0]),
-          )),
-          Flexible(
-            child: Text(
-              committees[index][1],
-              style: TextStyle(color: Colors.white),
-              maxLines: 1,
+  List<DropdownMenuItem> generateItems(BuildContext context) {
+    return List.generate(
+      committees.length - 1,
+      (index) => DropdownMenuItem(
+        value: committees[index][1],
+        child: Row(
+          children: [
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Image.asset(committees[index][0]),
+            )),
+            Flexible(
+              child: Text(
+                committees[index][1],
+                style: Theme.of(context).textTheme.labelMedium,
+                maxLines: 1,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class CustomButton extends StatelessWidget {

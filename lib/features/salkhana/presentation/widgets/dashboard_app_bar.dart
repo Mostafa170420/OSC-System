@@ -119,10 +119,7 @@ class DashboardAppBar extends StatelessWidget {
                       "Mostafa Ahmed",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      style: Theme.of(context).textTheme.labelMedium
                     ),
                   ),
                 ],

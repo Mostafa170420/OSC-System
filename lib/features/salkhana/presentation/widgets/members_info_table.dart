@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/core/responsive.dart';
 import 'package:osc_system/features/salkhana/data/model/member.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_states.dart';
@@ -15,7 +14,7 @@ class MembersInfoTable extends StatelessWidget {
   var dropdownTitle = "";
   @override
   Widget build(BuildContext context) {
-   
+    items = generateDropdownItems(context);
 
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<SalkhanaCubit, SalkhanaStates>(
@@ -443,31 +442,33 @@ class MembersInfoTable extends StatelessWidget {
         .toList();
   }
 
-  List<DropdownMenuItem> items = List.generate(
-    committees.length,
-    (index) => DropdownMenuItem(
-      alignment: AlignmentDirectional.center,
-      value: committees[index][1],
-      child: Row(
-        children: [
-          Flexible(
-              child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image.asset(committees[index][0]),
-          )),
-          Flexible(
-            child: Text(
-              committees[index][1],
-              style: TextStyle(color: Colors.white),
-              maxLines: 1,
+  List<DropdownMenuItem> generateDropdownItems(BuildContext context) {
+    return List.generate(
+      committees.length,
+      (index) => DropdownMenuItem(
+        alignment: AlignmentDirectional.center,
+        value: committees[index][1],
+        child: Row(
+          children: [
+            Flexible(
+                child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Image.asset(committees[index][0]),
+            )),
+            Flexible(
+              child: Text(
+                committees[index][1],
+                style: Theme.of(context).textTheme.labelMedium,
+                maxLines: 1,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 
-
+  late List<DropdownMenuItem> items;
 
   List<SalkhanaMemberModel> faceList = List.generate(
     5,

@@ -11,3 +11,4 @@ String committeeImagePath(String name) {
     }
     return committees[0][0];
   }
+  

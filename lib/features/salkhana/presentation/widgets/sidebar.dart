@@ -39,21 +39,47 @@ class Sidebar extends StatelessWidget {
           width:
               Responsive.isDesktop(context) ? size.width / 5 : size.width / 3),
       theme: SidebarXTheme(
-          selectedItemDecoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.6),
-              borderRadius: BorderRadius.circular(10)),
-          itemTextPadding: EdgeInsets.symmetric(horizontal: 25),
-          selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 25),
-          textStyle: Theme.of(context).textTheme.labelMedium,
-          hoverTextStyle: Theme.of(context).textTheme.labelMedium,
-          selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor),
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          iconTheme: IconThemeData(color: Colors.white)),
+
+  hoverColor: Theme.of(context).hoverColor.withOpacity(0.1),
+
+  selectedItemDecoration: BoxDecoration(
+    color: Theme.of(context).primaryColor.withOpacity(0.1),
+    borderRadius: BorderRadius.circular(12),
+  ),
+ 
+  itemTextPadding: EdgeInsets.symmetric(horizontal: 20),
+  selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 20),
+  textStyle: Theme.of(context).textTheme.labelMedium,
+  hoverTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+    fontWeight: FontWeight.w500,
+    color: Theme.of(context).primaryColor,
+  ),
+  selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+    fontWeight: FontWeight.bold,
+    color: Theme.of(context).primaryColor,  
+  ),
+  itemDecoration: BoxDecoration(
+    color: Theme.of(context).canvasColor,
+    borderRadius: BorderRadius.circular(12),
+  ),
+  decoration: BoxDecoration(
+    color: Theme.of(context).canvasColor,
+    borderRadius: BorderRadius.circular(12),
+  ),
+  
+  iconTheme: Theme.of(context).iconTheme,
+
+  selectedIconTheme: Theme.of(context).iconTheme.copyWith(
+    color: Theme.of(context).primaryColor,
+    size: 26,  
+  ),
+  
+  hoverIconTheme: IconThemeData(
+    color: Theme.of(context).primaryColor.withOpacity(0.7),
+    size: 26,  
+  ),
+),
+
       items: [
         SidebarXItem(
           icon: Icons.dashboard,
@@ -71,10 +97,14 @@ class Sidebar extends StatelessWidget {
             BlocProvider.of<SidebarCubit>(context).changeScreen(1);
           },
         ),
-        SidebarXItem(icon: Icons.settings, label: "Settings",onTap: () {
-           BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+        SidebarXItem(
+          icon: Icons.settings,
+          label: "Settings",
+          onTap: () {
+            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
             BlocProvider.of<SidebarCubit>(context).changeScreen(2);
-        },)
+          },
+        ),
       ],
     );
   }

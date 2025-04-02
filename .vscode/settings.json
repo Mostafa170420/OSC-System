@@ -10,5 +10,6 @@
     "flutterTools.displayGetxContextMenu": false,
     "flutterTools.displayMobxContextMenu": false,
     "flutterTools.displayRiverpodContextMenu": false,
-    "flutterTools.displayModularContextMenu": false
+    "flutterTools.displayModularContextMenu": false,
+    "cmake.sourceDirectory": "D:/OSC_Flutter/OSC-System/linux"
 }

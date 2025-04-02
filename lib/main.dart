@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/features/salkhana/presentation/screens/auth/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'core/theme/theme.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
              theme: state is LightThemeState
                 ? AppThemes.lightTheme
                 : AppThemes.darkTheme,  // 🌟 Uses the selected theme
-            home: DashboardScreen(),
+            home: LoginScreen(),
           );
         },
       ),
