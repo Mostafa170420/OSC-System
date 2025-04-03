@@ -19,226 +19,235 @@ class MembersInfoTable extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<SalkhanaCubit, SalkhanaStates>(
       buildWhen: (previous, current) =>
-          current is SalkhanaLoading || current is SalkhanaSuccsses,
+          current is SalkhanaLoading ||
+          current is SalkhanaSuccsses ||
+          current is SalkhanaFailureNetwork,
       builder: (context, state) {
         print(state);
-        return Container(
-          margin: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        "Members",
-                        maxLines: 1,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleLarge?.copyWith(fontSize: 25),
-                      ),
-                    ),
-                    Flexible(
-                      child: SizedBox(
-                        height: 45,
-                        width: 140,
-                        child: MaterialButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                backgroundColor:
-                                    Theme.of(context).dialogBackgroundColor,
-                                content: AddMemberDialog(),
-                              ),
-                            );
-                          },
-                          color: Theme.of(context).primaryColor,
-                          elevation: 5,
-                          height: 50,
-                          minWidth: 160,
-                          hoverColor: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: FittedBox(
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person_add_alt_1_outlined,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                                SizedBox(width: 8),
-                                Text(
-                                  "Add New",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3), // Shadow color
-                          blurRadius: 10, // Spread of the shadow
-                          offset: Offset(0, 5), // Position of the shadow
-                        ),
-                      ],
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: Theme.of(context)
-                            .primaryColor
-                            .withOpacity(0.2), // Border color
-                        width: 1, // Border width
-                      ),
-                    ),
-                    width: size.width / 5,
-                    child: DropdownButton(
-                        underline: SizedBox(),
-                        dropdownColor: Theme.of(context).cardColor,
-                        isExpanded: true,
-                        iconEnabledColor: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                        menuWidth: 300,
-                        value: dropdownTitle,
-                        alignment: AlignmentDirectional.center,
-                        items: items,
-                        style: TextStyle(),
-                        onChanged: (value) {
-                          dropdownTitle = value;
-                          BlocProvider.of<SalkhanaCubit>(context)
-                              .changeCommittee(value);
-                        }),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: Skeletonizer(
-                  enabled: (state is SalkhanaSuccsses ||
-                          state is SalkhanaSuccssesFirestore)
-                      ? false
-                      : true,
-                  child: ListView(
+        if (state is SalkhanaFailureNetwork) {
+          return Center(
+            child: Text("Error"),
+          );
+        } else {
+          return Container(
+            margin: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: FittedBox(
-                          fit: BoxFit.cover,
-                          child: DataTable(
-                            columns: [
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Name",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
+                      Flexible(
+                        child: Text(
+                          "Members",
+                          maxLines: 1,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleLarge?.copyWith(fontSize: 25),
+                        ),
+                      ),
+                      Flexible(
+                        child: SizedBox(
+                          height: 45,
+                          width: 140,
+                          child: MaterialButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  backgroundColor:
+                                      Theme.of(context).dialogBackgroundColor,
+                                  content: AddMemberDialog(),
                                 ),
+                              );
+                            },
+                            color: Theme.of(context).primaryColor,
+                            elevation: 5,
+                            height: 50,
+                            minWidth: 160,
+                            hoverColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: FittedBox(
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.person_add_alt_1_outlined,
+                                    color: Colors.white,
+                                    size: 24,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    "Add New",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                  ),
+                                ],
                               ),
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Phone",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Email",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Committee 1",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Committee 2",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Attendance",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              DataColumn(
-                                headingRowAlignment: MainAxisAlignment.center,
-                                label: Text(
-                                  "Actions",
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor),
-                                ),
-                              ),
-                            ],
-                            rows: _buildTableRows(
-                                context,
-                                (state is SalkhanaSuccsses)
-                                    ? state.members
-                                    : faceList),
+                            ),
                           ),
                         ),
                       )
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
-        );
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Colors.black.withOpacity(0.3), // Shadow color
+                            blurRadius: 10, // Spread of the shadow
+                            offset: Offset(0, 5), // Position of the shadow
+                          ),
+                        ],
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Theme.of(context)
+                              .primaryColor
+                              .withOpacity(0.2), // Border color
+                          width: 1, // Border width
+                        ),
+                      ),
+                      width: size.width / 5,
+                      child: DropdownButton(
+                          underline: SizedBox(),
+                          dropdownColor: Theme.of(context).cardColor,
+                          isExpanded: true,
+                          iconEnabledColor: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                          menuWidth: 300,
+                          value: dropdownTitle,
+                          alignment: AlignmentDirectional.center,
+                          items: items,
+                          style: TextStyle(),
+                          onChanged: (value) {
+                            dropdownTitle = value;
+                            BlocProvider.of<SalkhanaCubit>(context)
+                                .changeCommittee(value);
+                          }),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Skeletonizer(
+                    enabled: (state is SalkhanaSuccsses ||
+                            state is SalkhanaSuccssesFirestore)
+                        ? false
+                        : true,
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: FittedBox(
+                            fit: BoxFit.cover,
+                            child: DataTable(
+                              columns: [
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Name",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Phone",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Email",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Committee 1",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Committee 2",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Attendance",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Actions",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                              ],
+                              rows: _buildTableRows(
+                                  context,
+                                  (state is SalkhanaSuccsses)
+                                      ? state.members
+                                      : faceList),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        }
       },
     );
   }

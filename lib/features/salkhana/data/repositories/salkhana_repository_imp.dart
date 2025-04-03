@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:either_dart/either.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -8,6 +11,7 @@ import '/../features/salkhana/data/model/member.dart';
 import '/../features/salkhana/domain/repositories/salkhana_repository.dart';
 
 class SalkhanaRepositoryImp extends SalkhanaRepository {
+  final Connectivity connectivity = Connectivity();
   @override
   Future<Either<Failure, void>> addMember(
       SalkhanaMemberModel memberModel, String salkhanaSeason) async {
@@ -51,18 +55,42 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
   }
 
   @override
-  Future<Either<Failure, Stream<List<SalkhanaMemberModel>>>> watchMembers(
-      String salkhanaSeason) async {
-    if (await InternetConnectionChecker.instance.hasConnection) {
-      try {
-        var stream = SupabaseHelper.getAllDocStream("").map((data) =>
-            data.map((e) => SalkhanaMemberModel.fromFirestore(e)).toList());
-        return Right(stream);
-      } on Exception catch (e) {
-        rethrow;
+  Stream<Either<Failure, List<SalkhanaMemberModel>>> watchMembers(
+      String salkhanaSeason) async* {
+    StreamSubscription? supabaseStreamSubscription;
+
+    await for (var connection in connectivity.onConnectivityChanged) {
+      if (connection == ConnectivityResult.none) {
+        yield Left(Failure());
+
+        await supabaseStreamSubscription?.cancel();
+        supabaseStreamSubscription = null;
+      } else {
+        yield* Stream<Either<Failure, List<SalkhanaMemberModel>>>.multi(
+            (controller) async {
+          try {
+            await supabaseStreamSubscription?.cancel();
+
+            supabaseStreamSubscription =
+                SupabaseHelper.getAllDocStream("").listen(
+              (event) {
+                final members = event
+                    .map((e) => SalkhanaMemberModel.fromFirestore(e))
+                    .toList();
+                controller.add(Right(members));
+              },
+              onError: (error) {
+                controller.add(Left(Failure()));
+              },
+              onDone: () {
+                controller.close();
+              },
+            );
+          } catch (e) {
+            controller.add(Left(Failure()));
+          }
+        });
       }
-    } else {
-      return Left(Failure());
     }
   }
 }

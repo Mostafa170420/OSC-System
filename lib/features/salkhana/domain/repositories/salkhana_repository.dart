@@ -5,7 +5,7 @@ import '/../features/salkhana/data/model/member.dart';
 
 abstract class SalkhanaRepository {
   // watch members
-  Future<Either<Failure, Stream<List<SalkhanaMemberModel>>>> watchMembers(
+  Stream<Either<Failure, List<SalkhanaMemberModel>>> watchMembers(
       String salkhanaSeason);
   // add new member
   Future<Either<Failure, void>> addMember(

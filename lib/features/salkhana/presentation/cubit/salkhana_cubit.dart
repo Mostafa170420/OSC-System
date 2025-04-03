@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/core/errors/failure.dart';
 
 import '../../data/model/member.dart';
 import '../../domain/repositories/salkhana_repository.dart';
@@ -15,17 +16,16 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
   void getMembers() async {
     emit(SalkhanaLoading());
     try {
-      salkhanaRepository.watchMembers(salkhanaSeason).fold(
-          (failure) => emit(SalkhanaFailureNetwork()),
-          (succsses) => succsses.listen(
-                (data) {
-                  members = data;
-                  filterMembers();
-                },
-              ));
+      salkhanaRepository.watchMembers(salkhanaSeason).listen(
+        (event) {
+          event.fold((failure) => emit(SalkhanaFailureNetwork()), (succses) {
+            members = succses;
+            filterMembers();
+          });
+        },
+      );
     } on Exception catch (e) {
       emit(SalkhanaFailureNetwork());
-      
     }
   }
 
