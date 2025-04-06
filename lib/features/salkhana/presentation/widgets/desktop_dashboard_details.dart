@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../cubit/salkhana_cubit.dart';
 import 'members_table.dart';
 import 'right_sidebar.dart';
 
@@ -18,7 +19,7 @@ class DesktopDashboardDetails extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: RightSidebar(),
+          child: RightSidebar( ),
         ),
       ],
     );
