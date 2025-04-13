@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:osc_system/features/salkhana/presentation/screens/emails_screen.dart';
 
 import '../../../../core/responsive.dart';
 import '../cubit/salkhana_cubit.dart';
 import '../cubit/salkhana_states.dart';
 import '../cubit/sidebar_cubit.dart';
 import '../widgets/dashboard_details.dart';
-import '../widgets/members_info_table.dart';
+import 'members_screen.dart';
 import '../widgets/sidebar.dart';
 import 'mobile/dashboard.dart';
 import 'settings_screen.dart';
@@ -17,7 +18,8 @@ class DashboardScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   static List<Widget> screens = [
     DashboardDetails(),
-    MembersInfoTable(),
+    MembersScreen(),
+    EmailScreen(),
     SettingsScreen(),
   ];
   @override

@@ -6,7 +6,6 @@ import 'package:sidebarx/sidebarx.dart';
 import '../../../../core/responsive.dart';
 import '../cubit/salkhana_cubit.dart';
 import '../cubit/sidebar_cubit.dart';
-import '../screens/settings_screen.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key, required this.controller});
@@ -89,14 +88,23 @@ class Sidebar extends StatelessWidget {
             BlocProvider.of<SidebarCubit>(context).changeScreen(1);
           },
         ),
-        SidebarXItem(
-          icon: Icons.settings,
-          label: "Settings",
+                SidebarXItem(
+          icon: Icons.email_rounded,
+          label: "Emails",
           onTap: () {
             BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
             BlocProvider.of<SidebarCubit>(context).changeScreen(2);
           },
         ),
+        SidebarXItem(
+          icon: Icons.settings,
+          label: "Settings",
+          onTap: () {
+            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+            BlocProvider.of<SidebarCubit>(context).changeScreen(3);
+          },
+        ),
+
       ],
     );
   }

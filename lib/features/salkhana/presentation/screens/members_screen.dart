@@ -8,14 +8,16 @@ import '../../../../core/constant/functions.dart';
 import '../../data/model/member.dart';
 import '../cubit/salkhana_cubit.dart';
 import '../cubit/salkhana_states.dart';
-import 'add_member_dialog.dart';
+import '../widgets/add_member_dialog.dart';
 
-class MembersInfoTable extends StatelessWidget {
-  MembersInfoTable({super.key});
+// ignore: must_be_immutable
+class MembersScreen extends StatelessWidget {
+  MembersScreen({super.key});
   var dropdownTitle = "";
   @override
   Widget build(BuildContext context) {
     items = generateDropdownItems(context);
+    final theme = Theme.of(context);
 
     Size size = MediaQuery.of(context).size;
     return BlocBuilder<SalkhanaCubit, SalkhanaStates>(
@@ -33,7 +35,7 @@ class MembersInfoTable extends StatelessWidget {
           return Container(
             margin: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
+              color: theme.canvasColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
@@ -49,60 +51,42 @@ class MembersInfoTable extends StatelessWidget {
                         child: Text(
                           "Members",
                           maxLines: 1,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleLarge?.copyWith(fontSize: 25),
+                          style: theme.textTheme.titleLarge
+                              ?.copyWith(fontSize: 25),
                         ),
                       ),
                       Flexible(
-                        child: SizedBox(
-                          height: 45,
-                          width: 140,
-                          child: MaterialButton(
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  backgroundColor:
-                                      Theme.of(context).dialogBackgroundColor,
-                                  content: AddMemberDialog(),
-                                ),
-                              );
-                            },
-                            color: Theme.of(context).primaryColor,
-                            elevation: 5,
-                            height: 50,
-                            minWidth: 160,
-                            hoverColor: Colors.green,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: FittedBox(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.person_add_alt_1_outlined,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    "Add New",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(
-                                          fontSize: 18,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                  ),
-                                ],
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                backgroundColor:
+                                    Theme.of(context).dialogBackgroundColor,
+                                content: AddMemberDialog(),
                               ),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.person_add_sharp,
+                            size: 24,
+                            color: Colors.white,
+                          ),
+                          label: const Text("add Member"),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.primaryColor,
+                            foregroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 14,
                             ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            textStyle: theme.textTheme.labelSmall,
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

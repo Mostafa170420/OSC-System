@@ -1,5 +1,3 @@
-
-
 import 'content.dart';
 
 import '../../features/salkhana/data/model/member.dart';
@@ -15,7 +13,7 @@ String committeeImagePath(String name) {
   return committees[0][0];
 }
 
-  class ChartStats {
+class ChartStats {
   final int accepted;
   final int rejected;
   final int pending;
@@ -33,13 +31,20 @@ ChartStats calculateOverallStats(List<SalkhanaMemberModel> members) {
   int pending = 0;
 
   for (var member in members) {
-    if (member.resultCommittee1 == 'accepted') accepted++;
-    else if (member.resultCommittee1 == 'rejected') rejected++;
-    else pending++;
-
-    if (member.resultCommittee2 == 'accepted') accepted++;
-    else if (member.resultCommittee2 == 'rejected') rejected++;
-    else pending++;
+    if (member.resultCommittee1 == 'accepted') {
+      accepted++;
+    } else if (member.resultCommittee1 == 'rejected') {
+      rejected++;
+    } else {
+      pending++;
+    }
+    if (member.resultCommittee2 == 'accepted') {
+      accepted++;
+    } else if (member.resultCommittee2 == 'rejected') {
+      rejected++;
+    } else {
+      pending++;
+    }
   }
 
   return ChartStats(
@@ -49,7 +54,8 @@ ChartStats calculateOverallStats(List<SalkhanaMemberModel> members) {
   );
 }
 
-Map<String, ChartStats> calculateCommitteeStats(List<SalkhanaMemberModel> members) {
+Map<String, ChartStats> calculateCommitteeStats(
+    List<SalkhanaMemberModel> members) {
   final Map<String, ChartStats> result = {};
 
   for (var committeeName in committees.map((e) => e[0])) {
@@ -59,13 +65,19 @@ Map<String, ChartStats> calculateCommitteeStats(List<SalkhanaMemberModel> member
 
     for (var member in members) {
       if (member.committee1 == committeeName) {
-        if (member.resultCommittee1 == 'accepted') accepted++;
-        else if (member.resultCommittee1 == 'rejected') rejected++;
-        else pending++;
+        if (member.resultCommittee1 == 'accepted')
+          accepted++;
+        else if (member.resultCommittee1 == 'rejected')
+          rejected++;
+        else
+          pending++;
       } else if (member.committee2 == committeeName) {
-        if (member.resultCommittee2 == 'accepted') accepted++;
-        else if (member.resultCommittee2 == 'rejected') rejected++;
-        else pending++;
+        if (member.resultCommittee2 == 'accepted')
+          accepted++;
+        else if (member.resultCommittee2 == 'rejected')
+          rejected++;
+        else
+          pending++;
       }
     }
 
@@ -76,6 +88,4 @@ Map<String, ChartStats> calculateCommitteeStats(List<SalkhanaMemberModel> member
     );
   }
   return result;
-  
-
 }
