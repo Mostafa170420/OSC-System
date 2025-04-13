@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/features/salkhana/presentation/screens/auth/login_screen.dart';
-import 'package:osc_system/features/salkhana/presentation/screens/dashboard_screen.dart';
 
+import '../cubit/salkhana_cubit.dart';
 import '../cubit/theme_cubit.dart';
+import 'auth/login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -30,10 +30,10 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          
             Text(
               "Account",
-              style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.labelMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Card(
@@ -45,11 +45,13 @@ class SettingsScreen extends StatelessWidget {
                 leading: Icon(Icons.person, color: theme.primaryColor),
                 title: Text(
                   "Profile",
-                  style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w600),
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                trailing:
+                    Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
                 onTap: () {
-                  // Navigate to Profile edit screen
+                  BlocProvider.of<SalkhanaCubit>(context).getMembers();
                 },
               ),
             ),
@@ -63,20 +65,21 @@ class SettingsScreen extends StatelessWidget {
                 leading: Icon(Icons.security, color: theme.primaryColor),
                 title: Text(
                   "Security",
-                  style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w600),
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                trailing:
+                    Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
                 onTap: () {
                   // Navigate to Security settings
                 },
               ),
             ),
             const SizedBox(height: 20),
-
-            
             Text(
               "Appearance",
-              style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.labelMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Card(
@@ -87,7 +90,8 @@ class SettingsScreen extends StatelessWidget {
               child: SwitchListTile(
                 title: Text(
                   "Dark Mode",
-                  style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w600),
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 value: theme.brightness == Brightness.dark,
                 onChanged: (value) => context.read<ThemeCubit>().toggleTheme(),
@@ -98,11 +102,10 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-  
             Text(
               "Preferences",
-              style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: theme.textTheme.labelMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Card(
@@ -114,13 +117,16 @@ class SettingsScreen extends StatelessWidget {
                 leading: Icon(Icons.language, color: theme.primaryColor),
                 title: Text(
                   "Language",
-                  style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w600),
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 subtitle: Text(
                   "English",
-                  style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
+                  style:
+                      theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
                 ),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                trailing:
+                    Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
                 onTap: () {
                   // Navigate to Language settings
                 },
@@ -133,25 +139,43 @@ class SettingsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                leading: Icon(Icons.notifications, color: theme.primaryColor),
+                leading: Icon(Icons.download, color: theme.primaryColor),
                 title: Text(
-                  "Notifications",
-                  style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.w600),
+                  "Download from Server",
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 trailing: Switch(
-                  value: true,
+                  value: false,
                   onChanged: (value) {
-                           Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => LoginScreen()),
-                          );
+                    BlocProvider.of<SalkhanaCubit>(context).downloadMembers();
                   },
                 ),
               ),
             ),
-           
-            
-          
+            SizedBox(
+              height: 10,
+            ),
+            Card(
+              color: theme.cardColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: Icon(Icons.upload, color: theme.primaryColor),
+                title: Text(
+                  "Upload to Server",
+                  style: theme.textTheme.labelSmall
+                      ?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                trailing: Switch(
+                  value: false,
+                  onChanged: (value) {
+                    BlocProvider.of<SalkhanaCubit>(context).uploadMembers();
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

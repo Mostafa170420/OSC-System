@@ -1,9 +1,4 @@
-
-
-
-
 import '../../data/model/member.dart';
-
 
 class SalkhanaStates {}
 
@@ -13,6 +8,10 @@ class SalkhanaSuccsses extends SalkhanaStates {
   List<SalkhanaMemberModel> members;
   SalkhanaSuccsses({required this.members});
 }
+
+class SalkhanaUploadSuccsses extends SalkhanaStates {}
+
+class SalkhanaDownloadSuccsses extends SalkhanaStates {}
 
 class SalkhanaFailureFirestore extends SalkhanaStates {}
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/features/salkhana/data/model/member.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
+
+import '../cubit/salkhana_cubit.dart';
 
 class DashboardAppBar extends StatelessWidget {
   DashboardAppBar({super.key});
@@ -115,12 +115,10 @@ class DashboardAppBar extends StatelessWidget {
                   ),
                   SizedBox(width: 12),
                   Expanded(
-                    child: Text(
-                      "Mostafa Ahmed",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.labelMedium
-                    ),
+                    child: Text("Mostafa Ahmed",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.labelMedium),
                   ),
                 ],
               ),

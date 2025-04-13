@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:osc_system/features/salkhana/presentation/widgets/mobile_dashboard_details.dart';
 
 import '../../../../core/responsive.dart';
 import '../screens/dashboard_screen.dart';
@@ -7,6 +6,7 @@ import 'dashboard_app_bar.dart';
 import 'desktop_dashboard_details.dart';
 import 'members_table.dart';
 import 'mobile_dashboard_app_bar.dart';
+import 'mobile_dashboard_details.dart';
 import 'right_sidebar.dart';
 
 class DashboardDetails extends StatelessWidget {
