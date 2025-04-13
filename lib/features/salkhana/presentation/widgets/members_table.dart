@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/features/salkhana/data/model/member.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/drop_down_cubit.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_states.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/constant/content.dart';
 import '../../../../core/constant/functions.dart';
+import '../../data/model/member.dart';
+import '../cubit/drop_down_cubit.dart';
+import '../cubit/salkhana_cubit.dart';
+import '../cubit/salkhana_states.dart';
 
 class MembersTable extends StatelessWidget {
   MembersTable({super.key});

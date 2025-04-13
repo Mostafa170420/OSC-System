@@ -1,14 +1,14 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/core/errors/failure.dart';
 
 import '../../data/model/member.dart';
+import '../../data/repositories/salkhana_repository_imp.dart';
 import '../../domain/repositories/salkhana_repository.dart';
 import 'salkhana_states.dart';
 
 class SalkhanaCubit extends Cubit<SalkhanaStates> {
-  SalkhanaCubit({required this.salkhanaRepository}) : super(SalkhanaLoading());
-  SalkhanaRepository salkhanaRepository;
+  SalkhanaCubit() : super(SalkhanaLoading());
+  SalkhanaRepositoryImp salkhanaRepositoryImp = SalkhanaRepositoryImp();
   List<SalkhanaMemberModel> members = [];
   String committee = "";
   String salkhanaSeason = "Salkhana25";
@@ -16,7 +16,7 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
   void getMembers() async {
     emit(SalkhanaLoading());
     try {
-      salkhanaRepository.watchMembers(salkhanaSeason).listen(
+      salkhanaRepositoryImp.watchMembers(salkhanaSeason).listen(
         (event) {
           event.fold((failure) => emit(SalkhanaFailureNetwork()), (succses) {
             members = succses;
@@ -30,19 +30,19 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
   }
 
   void addMember(SalkhanaMemberModel memberModel) async {
-    await salkhanaRepository.addMember(memberModel, salkhanaSeason).fold(
+    await salkhanaRepositoryImp.addMember(memberModel, salkhanaSeason).fold(
         (failure) => emit(SalkhanaFailureFirestore()),
         (succsses) => emit(SalkhanaSuccssesFirestore()));
   }
 
   void removeMember(String memberId) async {
-    await salkhanaRepository.removeMember(memberId, salkhanaSeason).fold(
+    await salkhanaRepositoryImp.removeMember(memberId, salkhanaSeason).fold(
         (failure) => emit(SalkhanaFailureFirestore()),
         (succsses) => emit(SalkhanaSuccssesFirestore()));
   }
 
   void updateMember(SalkhanaMemberModel memberModel) async {
-    await salkhanaRepository.updateMember(memberModel, salkhanaSeason).fold(
+    await salkhanaRepositoryImp.updateMember(memberModel, salkhanaSeason).fold(
         (failure) => emit(SalkhanaFailureFirestore()),
         (succsses) => emit(SalkhanaSuccssesFirestore()));
   }
@@ -64,6 +64,22 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
     } else {
       emit(SalkhanaSuccsses(members: members));
     }
+  }
+
+  void downloadMembers() async {
+    await salkhanaRepositoryImp.downloadMembersToLacal().fold(
+          (fail) => emit(SalkhanaFailureFirestore()),
+          (sucsses) => emit(SalkhanaSuccsses(members: members)),
+        );
+    emit(SalkhanaDownloadSuccsses());
+  }
+
+  void uploadMembers() async {
+    await salkhanaRepositoryImp.uploadMembersToRemote().fold(
+          (fail) => emit(SalkhanaFailureFirestore()),
+          (sucsses) => emit(SalkhanaSuccsses(members: members)),
+        );
+    emit(SalkhanaUploadSuccsses());
   }
 
   void searchMember(String text) {

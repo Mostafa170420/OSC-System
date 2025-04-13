@@ -11,6 +11,33 @@ class SupabaseHelper {
     }
   }
 
+  static Future<void> removeAllDocs() async {
+    try {
+      await supabase.from("salkhana").delete().neq('id', '');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> addAllDocs(List<Map<String, dynamic>> members) async {
+    try {
+      for (var member in members) {
+        await addDoc("path", "id", member);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> getDocs() async {
+    try {
+      var response = await supabase.from("salkhana").select();
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   static Future<void> addDoc(
       String path, String id, Map<String, dynamic> data) async {
     try {

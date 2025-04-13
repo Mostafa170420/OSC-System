@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/core/responsive.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/sidebar_cubit.dart';
-import 'package:osc_system/features/salkhana/presentation/widgets/dashboard_details.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sidebarx/sidebarx.dart';
 
+import '../../../../core/responsive.dart';
+import '../cubit/salkhana_cubit.dart';
+import '../cubit/sidebar_cubit.dart';
 import '../screens/settings_screen.dart';
 
 class Sidebar extends StatelessWidget {
@@ -39,47 +38,40 @@ class Sidebar extends StatelessWidget {
           width:
               Responsive.isDesktop(context) ? size.width / 5 : size.width / 3),
       theme: SidebarXTheme(
-
-  hoverColor: Theme.of(context).hoverColor.withOpacity(0.1),
-
-  selectedItemDecoration: BoxDecoration(
-    color: Theme.of(context).primaryColor.withOpacity(0.1),
-    borderRadius: BorderRadius.circular(12),
-  ),
- 
-  itemTextPadding: EdgeInsets.symmetric(horizontal: 20),
-  selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 20),
-  textStyle: Theme.of(context).textTheme.labelMedium,
-  hoverTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-    fontWeight: FontWeight.w500,
-    color: Theme.of(context).primaryColor,
-  ),
-  selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-    fontWeight: FontWeight.bold,
-    color: Theme.of(context).primaryColor,  
-  ),
-  itemDecoration: BoxDecoration(
-    color: Theme.of(context).canvasColor,
-    borderRadius: BorderRadius.circular(12),
-  ),
-  decoration: BoxDecoration(
-    color: Theme.of(context).canvasColor,
-    borderRadius: BorderRadius.circular(12),
-  ),
-  
-  iconTheme: Theme.of(context).iconTheme,
-
-  selectedIconTheme: Theme.of(context).iconTheme.copyWith(
-    color: Theme.of(context).primaryColor,
-    size: 26,  
-  ),
-  
-  hoverIconTheme: IconThemeData(
-    color: Theme.of(context).primaryColor.withOpacity(0.7),
-    size: 26,  
-  ),
-),
-
+        hoverColor: Theme.of(context).hoverColor.withOpacity(0.1),
+        selectedItemDecoration: BoxDecoration(
+          color: Theme.of(context).primaryColor.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        itemTextPadding: EdgeInsets.symmetric(horizontal: 20),
+        selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 20),
+        textStyle: Theme.of(context).textTheme.labelMedium,
+        hoverTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).primaryColor,
+            ),
+        selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+        itemDecoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        iconTheme: Theme.of(context).iconTheme,
+        selectedIconTheme: Theme.of(context).iconTheme.copyWith(
+              color: Theme.of(context).primaryColor,
+              size: 26,
+            ),
+        hoverIconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor.withOpacity(0.7),
+          size: 26,
+        ),
+      ),
       items: [
         SidebarXItem(
           icon: Icons.dashboard,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:osc_system/core/constant/content.dart';
-import 'package:osc_system/features/salkhana/data/model/member.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/drop_down_cubit.dart';
-import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
-import 'package:osc_system/features/salkhana/presentation/widgets/custom_text_field.dart';
+
+import '../../../../core/constant/content.dart';
+import '../../data/model/member.dart';
+import '../cubit/drop_down_cubit.dart';
+import '../cubit/salkhana_cubit.dart';
+import 'custom_text_field.dart';
 
 class AddMemberDialog extends StatelessWidget {
   AddMemberDialog({super.key, this.member});

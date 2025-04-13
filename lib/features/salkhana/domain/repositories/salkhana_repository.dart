@@ -7,7 +7,8 @@ abstract class SalkhanaRepository {
   // watch members
   Stream<Either<Failure, List<SalkhanaMemberModel>>> watchMembers(
       String salkhanaSeason);
-  // add new member
+  Future<Either<Failure, void>> uploadMembersToRemote();
+  Future<Either<Failure, void>> downloadMembersToLacal();
   Future<Either<Failure, void>> addMember(
       SalkhanaMemberModel memberModel, String salkhanaSeason);
   // update member

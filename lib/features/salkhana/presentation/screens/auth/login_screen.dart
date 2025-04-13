@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:osc_system/features/salkhana/presentation/screens/dashboard_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../dashboard_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  static final TextEditingController passwordController = TextEditingController();
-  static final TextEditingController usernameController = TextEditingController();
+  static final TextEditingController passwordController =
+      TextEditingController();
+  static final TextEditingController usernameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +80,8 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 30),
                   Text(
                     "Username",
-                    style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.labelMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   TextField(
@@ -91,18 +95,21 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 16),
                     ),
                   ),
                   const SizedBox(height: 20),
                   Text(
                     "Password",
-                    style: theme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.labelMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                    
+
                   TextField(
-                    controller:passwordController ,
+                    controller: passwordController,
                     obscureText: true,
+                    onEditingComplete: () => login(context),
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock, color: theme.primaryColor),
                       hintText: "Enter your password",
@@ -112,7 +119,8 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 16),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -125,7 +133,8 @@ class LoginScreen extends StatelessWidget {
                       },
                       child: Text(
                         "Forgot Password?",
-                        style: theme.textTheme.labelSmall?.copyWith(color: theme.primaryColor),
+                        style: theme.textTheme.labelSmall
+                            ?.copyWith(color: theme.primaryColor),
                       ),
                     ),
                   ),
@@ -135,13 +144,7 @@ class LoginScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                       if (usernameController.text=='admin'&& passwordController.text=='osc') { // Replace with actual login logic
-                          // Navigate to the home screen
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => DashboardScreen()),
-                          );
-                        } 
+                        login(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: theme.primaryColor,
@@ -152,7 +155,8 @@ class LoginScreen extends StatelessWidget {
                       ),
                       child: Text(
                         "Login",
-                        style: theme.textTheme.labelSmall?.copyWith(color: Colors.white),
+                        style: theme.textTheme.labelSmall
+                            ?.copyWith(color: Colors.white),
                       ),
                     ),
                   ),
@@ -167,7 +171,8 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           Text(
                             "Don't have an account? ",
-                            style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey),
+                            style: theme.textTheme.labelSmall
+                                ?.copyWith(color: Colors.grey),
                           ),
                           TextButton(
                             onPressed: () {
@@ -175,7 +180,8 @@ class LoginScreen extends StatelessWidget {
                             },
                             child: Text(
                               "Sign Up",
-                              style: theme.textTheme.labelSmall?.copyWith(color: theme.primaryColor),
+                              style: theme.textTheme.labelSmall
+                                  ?.copyWith(color: theme.primaryColor),
                             ),
                           ),
                         ],
@@ -189,5 +195,17 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void login(BuildContext context) {
+    if (usernameController.text == 'admin' &&
+        passwordController.text == 'osc') {
+      // Replace with actual login logic
+      // Navigate to the home screen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => DashboardScreen()),
+      );
+    }
   }
 }
