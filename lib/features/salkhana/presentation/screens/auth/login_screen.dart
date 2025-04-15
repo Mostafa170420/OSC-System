@@ -209,8 +209,11 @@ class LoginScreen extends StatelessWidget {
   }
 
   void login(BuildContext context) {
-    if (usernameController.text == 'admin' &&
-        passwordController.text == 'osc') {
+    final username = LoginScreen.usernameController.text.trim();
+    final password = LoginScreen.passwordController.text.trim();
+    if (username == 'admin' && password == 'osc') {
+      accountName = username;
+      MotionSnackBarSuccess(context, "Login Successful");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => DashboardScreen()),
@@ -218,12 +221,7 @@ class LoginScreen extends StatelessWidget {
       accountName = usernameController.text;
       usernameController.clear();
       passwordController.clear();
-    }
-
-    final username = LoginScreen.usernameController.text.trim();
-    final password = LoginScreen.passwordController.text;
-
-    if (HiveHelper.loginAdmin(username, password)) {
+    } else if (HiveHelper.loginAdmin(username, password)) {
       MotionSnackBarSuccess(context, "Login Successful");
       accountName = username;
       Navigator.pushReplacement(
