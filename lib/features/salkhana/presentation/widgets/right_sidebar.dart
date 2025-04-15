@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/constant/content.dart';
+import '../../../../core/constant/constant.dart';
 
 class RightSidebar extends StatelessWidget {
   const RightSidebar({super.key});

@@ -1,4 +1,9 @@
-import 'content.dart';
+// ignore_for_file: curly_braces_in_flow_control_structures, non_constant_identifier_names
+
+import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
+
+import 'constant.dart';
 
 import '../../features/salkhana/data/model/member.dart';
 
@@ -72,9 +77,9 @@ Map<String, ChartStats> calculateCommitteeStats(
         else
           pending++;
       } else if (member.committee2 == committeeName) {
-        if (member.resultCommittee2 == 'accepted')
+        if (member.resultCommittee2 == 'accepted') {
           accepted++;
-        else if (member.resultCommittee2 == 'rejected')
+        } else if (member.resultCommittee2 == 'rejected')
           rejected++;
         else
           pending++;
@@ -88,4 +93,54 @@ Map<String, ChartStats> calculateCommitteeStats(
     );
   }
   return result;
+}
+
+
+void MotionSnackBarSuccess(BuildContext context, String message) {
+  MotionToast.success(
+    title: Text(message),
+    toastDuration: Duration(seconds: 2),
+    toastAlignment: Alignment.topCenter,
+    animationType: AnimationType.slideInFromLeft,
+    description: SizedBox(),
+    animationDuration: Duration(milliseconds: 400),
+    animationCurve: Curves.easeInOut,
+    opacity: 0.95,
+  ).show(context);
+}
+void MotionSnackBarError(BuildContext context, String message) {
+  MotionToast.error(
+    title: Text(message),
+    toastDuration: Duration(seconds: 2),
+    toastAlignment: Alignment.topCenter,
+    animationType: AnimationType.slideInFromLeft,
+    description: SizedBox(),
+    animationDuration: Duration(milliseconds: 400),
+    animationCurve: Curves.easeInOut,
+    opacity: 0.95,
+  ).show(context);
+}
+void MotionSnackBarInfo(BuildContext context, String message) {
+  MotionToast.info(
+    title: Text(message),
+    toastDuration: Duration(seconds: 2),
+    toastAlignment: Alignment.topCenter,
+    animationType: AnimationType.slideInFromLeft,
+    description: SizedBox(),
+    animationDuration: Duration(milliseconds: 400),
+    animationCurve: Curves.easeInOut,
+    opacity: 0.95,
+  ).show(context);
+}
+void MotionSnackBarWarning(BuildContext context, String message) {
+  MotionToast.warning(
+    title: Text(message),
+    toastDuration: Duration(seconds: 2),
+    toastAlignment: Alignment.topCenter,
+    animationType: AnimationType.slideInFromLeft,
+    description: SizedBox(),
+    animationDuration: Duration(milliseconds: 400),
+    animationCurve: Curves.easeInOut,
+    opacity: 0.95,
+  ).show(context);
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:osc_system/features/salkhana/presentation/screens/emails_screen.dart';
 
+import '../../../../core/constant/functions.dart';
 import '../../../../core/responsive.dart';
 import '../cubit/salkhana_cubit.dart';
 import '../cubit/salkhana_states.dart';
@@ -27,25 +28,9 @@ class DashboardScreen extends StatelessWidget {
     return BlocListener<SalkhanaCubit, SalkhanaStates>(
       listener: (context, state) {
         if (state is SalkhanaUploadSuccsses) {
-          MotionToast.success(
-            title: Text("Uploading Sucsses"),
-            toastAlignment: Alignment.topLeft,
-            animationType: AnimationType.slideInFromLeft,
-            description: SizedBox(),
-            animationDuration: Duration(milliseconds: 400),
-            animationCurve: TreeSliver.defaultAnimationCurve,
-            opacity: 0.95,
-          ).show(context);
+          MotionSnackBarSuccess(context, "Uploading Succsses");
         } else if (state is SalkhanaDownloadSuccsses) {
-          MotionToast.success(
-            title: Text("Downloading Sucsses"),
-            toastAlignment: Alignment.topLeft,
-            animationType: AnimationType.slideInFromLeft,
-            description: SizedBox(),
-            animationDuration: Duration(milliseconds: 400),
-            animationCurve: TreeSliver.defaultAnimationCurve,
-            opacity: 0.95,
-          ).show(context);
+          MotionSnackBarSuccess(context, "Downloading Succsses");
         }
       },
       child: Scaffold(

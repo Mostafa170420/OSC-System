@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osc_system/features/salkhana/presentation/widgets/send_email_dialog.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import '../../../../core/constant/content.dart';
+import '../../../../core/constant/constant.dart';
 import '../../../../core/constant/functions.dart';
 import '../../data/model/member.dart';
 import '../cubit/salkhana_cubit.dart';
@@ -236,26 +236,6 @@ class MemberTableEmails extends StatelessWidget {
                                 DataColumn(
                                   headingRowAlignment: MainAxisAlignment.center,
                                   label: Text(
-                                    "Rejection Reason Committee 1",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                DataColumn(
-                                  headingRowAlignment: MainAxisAlignment.center,
-                                  label: Text(
-                                    "Rejection Reason Committee 2",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                DataColumn(
-                                  headingRowAlignment: MainAxisAlignment.center,
-                                  label: Text(
                                     "Email Sent",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
@@ -363,20 +343,6 @@ class MemberTableEmails extends StatelessWidget {
               DataCell(Center(
                 child: Text(
                   member.resultCommittee2,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
-              DataCell(Center(
-                child: Text(
-                  member.rejectionReasonCommittee1 ?? "",
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
-              DataCell(Center(
-                child: Text(
-                  member.rejectionReasonCommittee2 ?? "",
                   maxLines: 1,
                   style: Theme.of(context).textTheme.labelSmall,
                 ),

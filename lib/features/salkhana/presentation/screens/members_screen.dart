@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/constant/content.dart';
+import '../../../../core/constant/constant.dart';
 import '../../../../core/constant/functions.dart';
 import '../../data/model/member.dart';
 import '../cubit/salkhana_cubit.dart';

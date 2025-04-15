@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/constant/content.dart';
+import '../../../../core/constant/constant.dart';
 import '../../data/model/member.dart';
 import '../cubit/drop_down_cubit.dart';
 import '../cubit/salkhana_cubit.dart';
@@ -43,11 +43,7 @@ class AddMemberDialog extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                  child: Image.asset(
-                    "assets/images/OSC_logo.png",
-                    height: 70,
-                    fit: BoxFit.cover,
-                  ),
+                  child: SizedBox(height: 100, width: 100, child: Logo()),
                 ),
                 Text(
                   "Add New Member",

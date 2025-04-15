@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/core/constant/constant.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -18,19 +19,7 @@ class Sidebar extends StatelessWidget {
       controller: controller,
       headerBuilder: (context, extended) {
         return DrawerHeader(
-          child: Stack(
-            fit: StackFit.passthrough,
-            children: [
-              Image.asset("assets/images/OSC_logo.png"),
-              Shimmer.fromColors(
-                enabled: true,
-                period: Duration(seconds: 2),
-                baseColor: Colors.transparent,
-                highlightColor: Colors.white38,
-                child: Image.asset("assets/images/OSC_logo.png"),
-              ),
-            ],
-          ),
+          child:Logo()
         );
       },
       extendedTheme: SidebarXTheme(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
-import '../../../../core/constant/content.dart';
+import '../../../../core/constant/constant.dart';
 import '../../data/model/member.dart';
 import 'custom_text_field.dart';
 
@@ -13,7 +13,7 @@ class SendEmailDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
-
+    ThemeData theme = Theme.of(context);
     final TextEditingController dateController =
         TextEditingController(text: today);
     final TextEditingController emailController = TextEditingController();
@@ -47,11 +47,9 @@ class SendEmailDialog extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
-                      child:
-                          Image.asset("assets/images/OSC_logo.png", height: 70),
+                      child: SizedBox(height: 100, width: 100, child: Logo()),
                     ),
-                    Text("Send Email",
-                        style: Theme.of(context).textTheme.titleLarge),
+                    Text("Send Email", style: theme.textTheme.titleLarge),
                     const SizedBox(height: 50),
 
                     Row(
@@ -64,13 +62,13 @@ class SendEmailDialog extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   "Members",
-                                  style: Theme.of(context).textTheme.labelSmall,
+                                  style: theme.textTheme.labelSmall,
                                 ),
                               ),
                               const SizedBox(height: 5),
                               Container(
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).cardColor,
+                                  color: theme.cardColor,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: DropdownButton<SalkhanaMemberModel>(
@@ -110,7 +108,7 @@ class SendEmailDialog extends StatelessWidget {
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   "Date",
-                                  style: Theme.of(context).textTheme.labelSmall,
+                                  style: theme.textTheme.labelSmall,
                                 ),
                               ),
                               const SizedBox(height: 5),
@@ -132,13 +130,19 @@ class SendEmailDialog extends StatelessWidget {
                     /// Select multiple members
                     CustomButton(
                       title: "Select Members",
-                      color: Colors.blueGrey,
+                      color: theme.primaryColor,
                       onPressed: () async {
                         final members = SalkhanaCubit.get(context).members;
                         final result = await showModalBottomSheet<
                             List<SalkhanaMemberModel>>(
                           context: context,
+                          backgroundColor: theme.dialogBackgroundColor,
                           isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
                           builder: (ctx) {
                             List<SalkhanaMemberModel> tempSelected = [
                               ...selectedMembers
@@ -150,7 +154,8 @@ class SendEmailDialog extends StatelessWidget {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text("Select Members"),
+                                      Text("Select Members",
+                                          style: theme.textTheme.titleLarge),
                                       const SizedBox(height: 10),
                                       SizedBox(
                                         height: 300,
@@ -164,9 +169,15 @@ class SendEmailDialog extends StatelessWidget {
                                               title: Text(member.name),
                                               subtitle: Text(member.email),
                                               trailing: isSelected
-                                                  ? const Icon(Icons.check_box)
-                                                  : const Icon(Icons
-                                                      .check_box_outline_blank),
+                                                  ? Icon(
+                                                      Icons.check_box,
+                                                      color: theme.primaryColor,
+                                                    )
+                                                  : Icon(
+                                                      Icons
+                                                          .check_box_outline_blank,
+                                                      color: theme.primaryColor,
+                                                    ),
                                               onTap: () {
                                                 setSheetState(() {
                                                   if (isSelected) {
@@ -181,9 +192,23 @@ class SendEmailDialog extends StatelessWidget {
                                         ),
                                       ),
                                       ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: theme.primaryColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 16),
+                                        ),
                                         onPressed: () =>
                                             Navigator.pop(ctx, tempSelected),
-                                        child: const Text("Confirm"),
+                                        child: const Text("Confirm",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            )),
                                       )
                                     ],
                                   ),
@@ -284,34 +309,6 @@ class SendEmailDialog extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class CustomButton extends StatelessWidget {
-  const CustomButton({
-    super.key,
-    required this.title,
-    required this.color,
-    this.onPressed,
-  });
-
-  final String title;
-  final Color color;
-  final void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialButton(
-      onPressed: onPressed,
-      height: 60,
-      minWidth: 300,
-      color: color,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 24),
       ),
     );
   }

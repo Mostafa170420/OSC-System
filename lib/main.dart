@@ -32,7 +32,8 @@ void main() async {
 
   // Open a Hive box
   await Hive.openBox<SalkhanaMemberModel>('salkhana_members');
-  final box = Hive.box<SalkhanaMemberModel>('salkhana_members');
+  await Hive.openBox('authAdmin');
+  // final box = Hive.box<SalkhanaMemberModel>('salkhana_members');
 
   // Listen to Hive box changes
 

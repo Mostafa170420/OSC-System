@@ -8,6 +8,7 @@ class ThemeCubit extends Cubit<ThemeState> {
 
   void toggleTheme() {
     if (state is LightThemeState) {
+      
       emit(DarkThemeState());
     } else {
       emit(LightThemeState());
