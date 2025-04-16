@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
         body: Center(
           child: Container(
             height: MediaQuery.of(context).size.height * 0.9,
-            width: MediaQuery.of(context).size.width * 0.35,
+            width: MediaQuery.of(context).size.width * 0.6,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -205,34 +205,32 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-  void signUp(BuildContext context)async {
-   final username = SignUpScreen.usernameController.text.trim();
-  final password = SignUpScreen.passwordController.text;
-  final confirmPassword = SignUpScreen.confirmPasswordController.text;
+  void signUp(BuildContext context) async {
+    final username = SignUpScreen.usernameController.text.trim();
+    final password = SignUpScreen.passwordController.text;
+    final confirmPassword = SignUpScreen.confirmPasswordController.text;
 
-  if (password != confirmPassword) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Passwords do not match")),
-    );
-    return;
-  }
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Passwords do not match")),
+      );
+      return;
+    }
 
-  try {
-    await HiveHelper.registerAdmin(username, password);
-    MotionSnackBarInfo(context, 
-        "Admin registered successfully. You can now log in.");
+    try {
+      await HiveHelper.registerAdmin(username, password);
+      MotionSnackBarInfo(
+          context, "Admin registered successfully. You can now log in.");
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
-    );
-    usernameController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-  } catch (e) {
-    MotionSnackBarError(context, 
-        "Error: ${e.toString()}");
-
-  }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+      usernameController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
+    } catch (e) {
+      MotionSnackBarError(context, "Error: ${e.toString()}");
+    }
   }
 }
