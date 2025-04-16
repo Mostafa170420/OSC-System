@@ -16,11 +16,19 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          "Settings",
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(
+              child: Icon(
+                Icons.settings,
+                color: theme.primaryColor,
+                size: 36,
+              ),
+            ),
+            Flexible(
+                child: Text("Settings", style: theme.textTheme.titleLarge)),
+          ],
         ),
         backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,

@@ -9,9 +9,6 @@ import '../../../../core/constant/functions.dart';
 import '../../data/model/member.dart';
 import '../cubit/salkhana_cubit.dart';
 import '../cubit/salkhana_states.dart';
-import '../widgets/add_member_dialog.dart';
-import '../widgets/member_table.dart';
-import 'members_screen.dart';
 
 class EmailScreen extends StatelessWidget {
   const EmailScreen({
@@ -28,12 +25,15 @@ class EmailScreen extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.email,
-                color: theme.primaryColor,
-                size: 36,
+              Flexible(
+                child: Icon(
+                  Icons.email,
+                  color: theme.primaryColor,
+                  size: 36,
+                ),
               ),
-              Text("Emails", style: theme.textTheme.titleLarge),
+              Flexible(
+                  child: Text("Emails", style: theme.textTheme.titleLarge)),
             ],
           ),
           centerTitle: true,
@@ -44,8 +44,17 @@ class EmailScreen extends StatelessWidget {
 }
 
 // ignore: must_be_immutable
-class MemberTableEmails extends StatelessWidget {
+class MemberTableEmails extends StatefulWidget {
+  MemberTableEmails({super.key});
+
+  @override
+  State<MemberTableEmails> createState() => _MemberTableEmailsState();
+}
+
+class _MemberTableEmailsState extends State<MemberTableEmails> {
   var dropdownTitle = "";
+  List<SalkhanaMemberModel> selectedMembers = [];
+
   @override
   Widget build(BuildContext context) {
     items = generateDropdownItems(context);
@@ -87,32 +96,38 @@ class MemberTableEmails extends StatelessWidget {
                           ).textTheme.titleLarge?.copyWith(fontSize: 25),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                backgroundColor:
-                                    Theme.of(context).dialogBackgroundColor,
-                                content: SendEmailDialog(),
+                      Flexible(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: ElevatedButton.icon(
+                            onPressed: selectedMembers.isNotEmpty
+                                ? () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        backgroundColor: Theme.of(context)
+                                            .dialogBackgroundColor,
+                                        content: SendEmailDialog(
+                                          selectedMembers: selectedMembers,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                : null,
+                            icon: const Icon(Icons.send),
+                            label: const Text("Send Emails"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: theme.primaryColor,
+                              foregroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 14,
                               ),
-                            );
-                          },
-                          icon: const Icon(Icons.send),
-                          label: const Text("Send Emails"),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: theme.primaryColor,
-                            foregroundColor: Colors.black,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 14,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              textStyle: theme.textTheme.labelSmall,
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14),
-                            ),
-                            textStyle: theme.textTheme.labelSmall,
                           ),
                         ),
                       ),
@@ -152,9 +167,11 @@ class MemberTableEmails extends StatelessWidget {
                           items: items,
                           style: TextStyle(),
                           onChanged: (value) {
-                            dropdownTitle = value;
+                            setState(() {
+                              dropdownTitle = value!;
+                            });
                             BlocProvider.of<SalkhanaCubit>(context)
-                                .changeCommittee(value);
+                                .changeCommittee(value!);
                           }),
                     ),
                   ],
@@ -173,6 +190,16 @@ class MemberTableEmails extends StatelessWidget {
                             fit: BoxFit.cover,
                             child: DataTable(
                               columns: [
+                                DataColumn(
+                                  headingRowAlignment: MainAxisAlignment.center,
+                                  label: Text(
+                                    "Select",
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
                                 DataColumn(
                                   headingRowAlignment: MainAxisAlignment.center,
                                   label: Text(
@@ -207,26 +234,6 @@ class MemberTableEmails extends StatelessWidget {
                                   headingRowAlignment: MainAxisAlignment.center,
                                   label: Text(
                                     "Committee 2",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                DataColumn(
-                                  headingRowAlignment: MainAxisAlignment.center,
-                                  label: Text(
-                                    "Result Committee 1",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                DataColumn(
-                                  headingRowAlignment: MainAxisAlignment.center,
-                                  label: Text(
-                                    "Result Committee 2",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
                                     style: TextStyle(
@@ -274,162 +281,209 @@ class MemberTableEmails extends StatelessWidget {
     );
   }
 
-  List<DataRow> _buildTableRows(context, List<SalkhanaMemberModel> members) {
-    return members
-        .map(
-          (member) => DataRow(
-            cells: [
-              DataCell(Center(
-                child: Text(
-                  member.name,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
-              DataCell(Center(
-                child: Text(
-                  member.email,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
-              DataCell(Center(
-                  child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    child: Image.asset(
-                      committeeImagePath(member.committee1),
-                      width: 30,
-                    ),
-                  ),
-                  Text(
-                    member.committee1,
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-              ))),
-              DataCell(Center(
-                  child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    child: Image.asset(
-                      committeeImagePath(member.committee2),
-                      width: 30,
-                    ),
-                  ),
-                  Text(
-                    member.committee2,
-                    maxLines: 1,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                ],
-              ))),
-              DataCell(Center(
-                child: Text(
-                  member.resultCommittee1,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
-              DataCell(Center(
-                child: Text(
-                  member.resultCommittee2,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              )),
-              DataCell(
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      member.emailSent ? Icons.check_circle : Icons.cancel,
-                      color: member.emailSent ? Colors.green : Colors.red,
-                      size: 18,
-                    ),
-                    SizedBox(width: 4),
-                    Flexible(
-                      child: Text(
-                        member.emailSent ? 'Sent' : 'Not Sent',
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color:
-                                  member.emailSent ? Colors.green : Colors.red,
-                            ),
-                      ),
-                    ),
-                  ],
+  List<DataRow> _buildTableRows(
+      BuildContext context, List<SalkhanaMemberModel> members) {
+    return members.map((member) {
+      final isSelected = selectedMembers.contains(member);
+      Color? committee1Color;
+      IconData? committee1Icon;
+      Color? committee2Color;
+      IconData? committee2Icon;
+
+      if (member.resultCommittee1.toLowerCase() == 'accepted') {
+        committee1Color = Colors.green;
+        committee1Icon = Icons.check_circle;
+      } else if (member.resultCommittee1.toLowerCase() == 'rejected') {
+        committee1Color = Colors.red;
+        committee1Icon = Icons.cancel;
+      } else if (member.resultCommittee1.toLowerCase() == 'waiting') {
+        committee1Color = Colors.blue;
+        committee1Icon = Icons.timer;
+      }
+
+      if (member.resultCommittee2.toLowerCase() == 'accepted') {
+        committee2Color = Colors.green;
+        committee2Icon = Icons.check_circle;
+      } else if (member.resultCommittee2.toLowerCase() == 'rejected') {
+        committee2Color = Colors.red;
+        committee2Icon = Icons.cancel;
+      } else if (member.resultCommittee2.toLowerCase() == 'waiting') {
+        committee2Color = Colors.blue;
+        committee2Icon = Icons.timer;
+      }
+
+      return DataRow(
+        selected: isSelected,
+        onSelectChanged: (bool? selected) {
+          setState(() {
+            if (selected != null) {
+              if (selected) {
+                selectedMembers.add(member);
+              } else {
+                selectedMembers.remove(member);
+              }
+            }
+          });
+        },
+        cells: [
+          DataCell(Center(
+              child: Icon(
+            isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+            color: Theme.of(context).primaryColor,
+          ))),
+          DataCell(Center(
+            child: Text(
+              member.name,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
+          )),
+          DataCell(Center(
+            child: Text(
+              member.email,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.labelSmall,
+            ),
+          )),
+          DataCell(Center(
+              child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Image.asset(
+                  committeeImagePath(member.committee1),
+                  width: 30,
+                  color: committee1Color,
                 ),
               ),
-              DataCell(Center(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  PopupMenuButton(
-                    splashRadius: 25,
-                    tooltip: "More Actions",
-                    icon: Icon(
-                      Icons.more_vert,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: Theme.of(context).cardColor,
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        value: 'details',
-                        child: Row(
-                          children: [
-                            Icon(Icons.info, color: Colors.blue),
-                            SizedBox(width: 10),
-                            Text(
-                              "Details",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+              Text(
+                member.committee1,
+                maxLines: 1,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: committee1Color),
+              ),
+              if (committee1Icon != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Icon(committee1Icon, color: committee1Color, size: 16),
+                ),
+            ],
+          ))),
+          DataCell(Center(
+              child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Image.asset(
+                  committeeImagePath(member.committee2),
+                  width: 30,
+                  color: committee2Color,
+                ),
+              ),
+              Text(
+                member.committee2,
+                maxLines: 1,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall
+                    ?.copyWith(color: committee2Color),
+              ),
+              if (committee2Icon != null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 4.0),
+                  child: Icon(committee2Icon, color: committee2Color, size: 16),
+                ),
+            ],
+          ))),
+          DataCell(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  member.emailSent ? Icons.check_circle : Icons.cancel,
+                  color: member.emailSent ? Colors.green : Colors.red,
+                  size: 18,
+                ),
+                SizedBox(width: 4),
+                Flexible(
+                  child: Text(
+                    member.emailSent ? 'Sent' : 'Not Sent',
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: member.emailSent ? Colors.green : Colors.red,
                         ),
-                      ),
-                    ],
-                    onSelected: (value) {
-                      if (value == 'details') {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            backgroundColor:
-                                Theme.of(context).dialogBackgroundColor,
-                            title: Text(
-                              "Member Details",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor),
-                            ),
-                            content: Text(
-                              "Name: ${member.name}\nPhone: ${member.phone}\nEmail: ${member.email}",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          DataCell(Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              PopupMenuButton(
+                splashRadius: 25,
+                tooltip: "More Actions",
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Theme.of(context).primaryColor,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                color: Theme.of(context).cardColor,
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 'details',
+                    child: Row(
+                      children: [
+                        Icon(Icons.info, color: Colors.blue),
+                        SizedBox(width: 10),
+                        Text(
+                          "Details",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      }
-                    },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ))),
+                onSelected: (value) {
+                  if (value == 'details') {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor:
+                            Theme.of(context).dialogBackgroundColor,
+                        title: Text(
+                          "Member Details",
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                        content: Text(
+                          "Name: ${member.name}\nPhone: ${member.phone}\nEmail: ${member.email}\nAcademic Year: ${member.academicYear}\nCollege: ${member.college}\nAttendance Date: ${member.attendanceDate}",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
             ],
-          ),
-        )
-        .toList();
+          ))),
+        ],
+      );
+    }).toList();
   }
 
   List<DropdownMenuItem> generateDropdownItems(BuildContext context) {
@@ -472,10 +526,16 @@ class MemberTableEmails extends StatelessWidget {
         committee1: "committee1",
         committee2: "committee2",
         attendanceDate: "sdf",
-        resultCommittee1: "resultCommittee1",
-        resultCommittee2: "resultCommittee2",
-        emailSent: false),
+        resultCommittee1: index == 0
+            ? 'accepted'
+            : index == 1
+                ? 'rejected'
+                : 'waiting',
+        resultCommittee2: index == 2
+            ? 'accepted'
+            : index == 3
+                ? 'rejected'
+                : 'waiting',
+        emailSent: index % 2 == 0),
   ).toList();
-
-  MemberTableEmails({super.key});
 }

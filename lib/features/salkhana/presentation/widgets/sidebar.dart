@@ -15,86 +15,87 @@ class Sidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return SidebarX(
-      controller: controller,
-      headerBuilder: (context, extended) {
-        return DrawerHeader(
-          child:Logo()
-        );
-      },
-      extendedTheme: SidebarXTheme(
-          width:
-              Responsive.isDesktop(context) ? size.width / 5 : size.width / 3),
-      theme: SidebarXTheme(
-        hoverColor: Theme.of(context).hoverColor.withOpacity(0.1),
-        selectedItemDecoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: SidebarX(
+        controller: controller,
+        headerBuilder: (context, extended) {
+          return DrawerHeader(child: Logo());
+        },
+        extendedTheme: SidebarXTheme(
+            width: Responsive.isDesktop(context)
+                ? size.width / 5
+                : size.width / 3),
+        theme: SidebarXTheme(
+          hoverColor: Theme.of(context).hoverColor.withOpacity(0.1),
+          selectedItemDecoration: BoxDecoration(
+            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          itemTextPadding: EdgeInsets.symmetric(horizontal: 20),
+          selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 20),
+          textStyle: Theme.of(context).textTheme.labelMedium,
+          hoverTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).primaryColor,
+              ),
+          selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+              ),
+          itemDecoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          iconTheme: Theme.of(context).iconTheme,
+          selectedIconTheme: Theme.of(context).iconTheme.copyWith(
+                color: Theme.of(context).primaryColor,
+                size: 26,
+              ),
+          hoverIconTheme: IconThemeData(
+            color: Theme.of(context).primaryColor.withOpacity(0.7),
+            size: 26,
+          ),
         ),
-        itemTextPadding: EdgeInsets.symmetric(horizontal: 20),
-        selectedItemTextPadding: EdgeInsets.symmetric(horizontal: 20),
-        textStyle: Theme.of(context).textTheme.labelMedium,
-        hoverTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).primaryColor,
-            ),
-        selectedTextStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-            ),
-        itemDecoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        iconTheme: Theme.of(context).iconTheme,
-        selectedIconTheme: Theme.of(context).iconTheme.copyWith(
-              color: Theme.of(context).primaryColor,
-              size: 26,
-            ),
-        hoverIconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor.withOpacity(0.7),
-          size: 26,
-        ),
+        items: [
+          SidebarXItem(
+            icon: Icons.dashboard,
+            label: "Dashboard",
+            onTap: () {
+              BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+              BlocProvider.of<SidebarCubit>(context).changeScreen(0);
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.people,
+            label: "Members",
+            onTap: () {
+              BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+              BlocProvider.of<SidebarCubit>(context).changeScreen(1);
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.email_rounded,
+            label: "Emails",
+            onTap: () {
+              BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+              BlocProvider.of<SidebarCubit>(context).changeScreen(2);
+            },
+          ),
+          SidebarXItem(
+            icon: Icons.settings,
+            label: "Settings",
+            onTap: () {
+              BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
+              BlocProvider.of<SidebarCubit>(context).changeScreen(3);
+            },
+          ),
+        ],
       ),
-      items: [
-        SidebarXItem(
-          icon: Icons.dashboard,
-          label: "Dashboard",
-          onTap: () {
-            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
-            BlocProvider.of<SidebarCubit>(context).changeScreen(0);
-          },
-        ),
-        SidebarXItem(
-          icon: Icons.people,
-          label: "Members",
-          onTap: () {
-            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
-            BlocProvider.of<SidebarCubit>(context).changeScreen(1);
-          },
-        ),
-                SidebarXItem(
-          icon: Icons.email_rounded,
-          label: "Emails",
-          onTap: () {
-            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
-            BlocProvider.of<SidebarCubit>(context).changeScreen(2);
-          },
-        ),
-        SidebarXItem(
-          icon: Icons.settings,
-          label: "Settings",
-          onTap: () {
-            BlocProvider.of<SalkhanaCubit>(context).changeCommittee("");
-            BlocProvider.of<SidebarCubit>(context).changeScreen(3);
-          },
-        ),
-
-      ],
     );
   }
 }

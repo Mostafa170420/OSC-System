@@ -418,10 +418,14 @@ class MembersScreen extends StatelessWidget {
                           builder: (context) => AlertDialog(
                             backgroundColor:
                                 Theme.of(context).dialogBackgroundColor,
-                            title: Text("Member Details"),
+                            title: Text(
+                              "Member Details",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                            ),
                             content: Text(
-                              "Name: ${member.name}\nPhone: ${member.phone}\nEmail: ${member.email}",
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              "Name: ${member.name}\nPhone: ${member.phone}\nEmail: ${member.email}\nAcademic Year: ${member.academicYear}\nCollege: ${member.college}\nAttendance Date: ${member.attendanceDate}",
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         );
