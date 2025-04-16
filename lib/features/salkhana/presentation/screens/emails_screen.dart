@@ -45,7 +45,7 @@ class EmailScreen extends StatelessWidget {
 
 // ignore: must_be_immutable
 class MemberTableEmails extends StatefulWidget {
-  MemberTableEmails({super.key});
+  const MemberTableEmails({super.key});
 
   @override
   State<MemberTableEmails> createState() => _MemberTableEmailsState();
@@ -193,16 +193,6 @@ class _MemberTableEmailsState extends State<MemberTableEmails> {
                                 DataColumn(
                                   headingRowAlignment: MainAxisAlignment.center,
                                   label: Text(
-                                    "Select",
-                                    overflow: TextOverflow.clip,
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                DataColumn(
-                                  headingRowAlignment: MainAxisAlignment.center,
-                                  label: Text(
                                     "Name",
                                     overflow: TextOverflow.clip,
                                     maxLines: 1,
@@ -265,7 +255,7 @@ class _MemberTableEmailsState extends State<MemberTableEmails> {
                                   context,
                                   (state is SalkhanaSuccsses)
                                       ? state.members
-                                      : faceList),
+                                      : []),
                             ),
                           ),
                         )
@@ -326,11 +316,6 @@ class _MemberTableEmailsState extends State<MemberTableEmails> {
           });
         },
         cells: [
-          DataCell(Center(
-              child: Icon(
-            isSelected ? Icons.check_box : Icons.check_box_outline_blank,
-            color: Theme.of(context).primaryColor,
-          ))),
           DataCell(Center(
             child: Text(
               member.name,
@@ -513,29 +498,4 @@ class _MemberTableEmailsState extends State<MemberTableEmails> {
   }
 
   late List<DropdownMenuItem> items;
-
-  List<SalkhanaMemberModel> faceList = List.generate(
-    5,
-    (index) => SalkhanaMemberModel(
-        id: "5",
-        name: "Mostafa Ahmed",
-        email: "email",
-        phone: "01009682965",
-        academicYear: "academicYear",
-        college: "college",
-        committee1: "committee1",
-        committee2: "committee2",
-        attendanceDate: "sdf",
-        resultCommittee1: index == 0
-            ? 'accepted'
-            : index == 1
-                ? 'rejected'
-                : 'waiting',
-        resultCommittee2: index == 2
-            ? 'accepted'
-            : index == 3
-                ? 'rejected'
-                : 'waiting',
-        emailSent: index % 2 == 0),
-  ).toList();
 }

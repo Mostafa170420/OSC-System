@@ -17,4 +17,6 @@ class SalkhanaFailureFirestore extends SalkhanaStates {}
 
 class SalkhanaSuccssesFirestore extends SalkhanaStates {}
 
+class SalkhanaSuccssesSendEmail extends SalkhanaStates {}
+
 class SalkhanaFailureNetwork extends SalkhanaStates {}

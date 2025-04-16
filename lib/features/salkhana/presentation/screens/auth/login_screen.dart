@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget {
         body: Center(
           child: Container(
             height: MediaQuery.of(context).size.height * 0.85,
-            width: MediaQuery.of(context).size.width * 0.35,
+            width: MediaQuery.of(context).size.width * 0.5,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(

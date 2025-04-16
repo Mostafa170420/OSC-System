@@ -61,7 +61,7 @@ class CustomValidator {
     if (value!.isEmpty) {
       return "Required";
     }
-    if (!(value.contains("@") && value.contains(".com"))) {
+    if (!(value.contains("@"))) {
       return "Required Email Format";
     }
     if (value.length < 5) {

@@ -31,6 +31,8 @@ class DashboardScreen extends StatelessWidget {
           MotionSnackBarSuccess(context, "Uploading Succsses");
         } else if (state is SalkhanaDownloadSuccsses) {
           MotionSnackBarSuccess(context, "Downloading Succsses");
+        } else if (state is SalkhanaSuccssesSendEmail) {
+          MotionSnackBarSuccess(context, "Email Send Succsses");
         }
       },
       child: Scaffold(
