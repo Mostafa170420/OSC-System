@@ -10,11 +10,14 @@ List committees = [
   ["assets/images/icons8-blender-100.png", "Blender"],
   ["assets/images/all.png", ""]
 ];
+String accountName = "";
+
 
 String accountName = "";
 
 class CustomValidator {
   static String? Function(String?)? passwordValidator = (value) {
+  passwordValidator(value) {
     if (value!.isEmpty) {
       return "Required";
     }
@@ -30,8 +33,9 @@ class CustomValidator {
     // }
 
     return null;
-  };
-  static String? Function(String?)? usernameValidator = (value) {
+  }
+  usernameValidator(value) {
+  usernameValidator(value) {
     if (value!.isEmpty) {
       return "Required";
     }
@@ -46,15 +50,19 @@ class CustomValidator {
     }
 
     return null;
-  };
-  static String? Function(String?)? validator = (value) {
+  }
+  validator(value) {
     if (value!.isEmpty) {
       return "Required";
     }
 
+    if (value.length > 50) {
+      return "Name is too long";
+    }
+
     return null;
-  };
-  static String? Function(String?)? emailValidator = (value) {
+  }
+  emailValidator(value) {
     if (value!.isEmpty) {
       return "Required";
     }
@@ -68,8 +76,10 @@ class CustomValidator {
       return "Email is too long";
     }
 
+
     return null;
-  };
+  }
+ return null;
 }
 
 class Logo extends StatelessWidget {
@@ -92,6 +102,7 @@ class Logo extends StatelessWidget {
     );
   }
 }
+
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -120,3 +131,5 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
+ return null;
+

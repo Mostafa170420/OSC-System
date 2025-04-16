@@ -95,12 +95,11 @@ Map<String, ChartStats> calculateCommitteeStats(
   return result;
 }
 
-
 void MotionSnackBarSuccess(BuildContext context, String message) {
   MotionToast.success(
     title: Text(message),
     toastDuration: Duration(seconds: 2),
-    toastAlignment: Alignment.topCenter,
+    toastAlignment: Alignment.bottomRight,
     animationType: AnimationType.slideInFromLeft,
     description: SizedBox(),
     animationDuration: Duration(milliseconds: 400),
@@ -108,11 +107,12 @@ void MotionSnackBarSuccess(BuildContext context, String message) {
     opacity: 0.95,
   ).show(context);
 }
+
 void MotionSnackBarError(BuildContext context, String message) {
   MotionToast.error(
     title: Text(message),
     toastDuration: Duration(seconds: 2),
-    toastAlignment: Alignment.topCenter,
+    toastAlignment: Alignment.bottomRight,
     animationType: AnimationType.slideInFromLeft,
     description: SizedBox(),
     animationDuration: Duration(milliseconds: 400),
@@ -120,11 +120,12 @@ void MotionSnackBarError(BuildContext context, String message) {
     opacity: 0.95,
   ).show(context);
 }
+
 void MotionSnackBarInfo(BuildContext context, String message) {
   MotionToast.info(
     title: Text(message),
     toastDuration: Duration(seconds: 2),
-    toastAlignment: Alignment.topCenter,
+    toastAlignment: Alignment.bottomRight,
     animationType: AnimationType.slideInFromLeft,
     description: SizedBox(),
     animationDuration: Duration(milliseconds: 400),
@@ -132,11 +133,12 @@ void MotionSnackBarInfo(BuildContext context, String message) {
     opacity: 0.95,
   ).show(context);
 }
+
 void MotionSnackBarWarning(BuildContext context, String message) {
   MotionToast.warning(
     title: Text(message),
     toastDuration: Duration(seconds: 2),
-    toastAlignment: Alignment.topCenter,
+    toastAlignment: Alignment.bottomRight,
     animationType: AnimationType.slideInFromLeft,
     description: SizedBox(),
     animationDuration: Duration(milliseconds: 400),
