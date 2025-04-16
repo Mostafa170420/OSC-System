@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../cubit/salkhana_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
+import '../../../../core/constant/constant.dart';
+import '../cubit/salkhana_states.dart';
 import 'members_table.dart';
 import 'right_sidebar.dart';
 
@@ -18,9 +20,15 @@ class DesktopDashboardDetails extends StatelessWidget {
             child: MembersTable(),
           ),
         ),
-        Expanded(
-          child: RightSidebar( ),
-        ),
+        Expanded(child:BlocBuilder<SalkhanaCubit, SalkhanaStates>(
+      buildWhen: (previous, current) => current is SalkhanaSuccsses,
+      builder: (context, state) {
+            return RightSidebar(
+              committees: convertToListOfLists(committees),
+              members: SalkhanaCubit.get(context).members,
+            );
+          },
+        )),
       ],
     );
   }

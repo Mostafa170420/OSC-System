@@ -341,7 +341,6 @@ class _MemberTableEmailsState extends State<MemberTableEmails> {
                 child: Image.asset(
                   committeeImagePath(member.committee1),
                   width: 30,
-                  color: committee1Color,
                 ),
               ),
               Text(
@@ -370,7 +369,6 @@ class _MemberTableEmailsState extends State<MemberTableEmails> {
                 child: Image.asset(
                   committeeImagePath(member.committee2),
                   width: 30,
-                  color: committee2Color,
                 ),
               ),
               Text(

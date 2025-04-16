@@ -399,8 +399,63 @@ class MembersScreen extends StatelessWidget {
                     ],
                     onSelected: (value) {
                       if (value == 'remove') {
-                        BlocProvider.of<SalkhanaCubit>(context)
-                            .removeMember(member.id);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              title: Text(
+                                "Remove Member",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Are you sure you want to remove this member?",
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: Text(
+                                          "Cancel",
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          BlocProvider.of<SalkhanaCubit>(
+                                                  context)
+                                              .removeMember(member.id);
+                                          Navigator.pop(context);
+                                          MotionSnackBarSuccess(
+                                              context, "Member Removed");
+                                        },
+                                        child: Text("Remove"),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
                       } else if (value == 'update') {
                         showDialog(
                           context: context,

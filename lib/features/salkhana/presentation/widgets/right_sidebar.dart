@@ -1,37 +1,44 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/constant/functions.dart';
+import '../../data/model/member.dart';
+
 class RightSidebar extends StatelessWidget {
-  const RightSidebar({super.key});
+  final List<SalkhanaMemberModel> members;
+  final List<List<String>> committees;
 
-  // Static data for member status
-  final Map<String, int> memberStatusCounts = const {
-    'accepted': 150,
-    'rejected': 30,
-    'waiting': 20,
-  };
-
-  // Static data for committees and their member counts (split into two groups)
-  final Map<String, int> committeeGroup1Counts = const {
-    'Flutter': 60,
-    'Back-End': 80,
-    'Front-End': 70,
-  };
-
-  final Map<String, int> committeeGroup2Counts = const {
-    'UI-UX': 50,
-    'Linux': 40,
-    'Blender': 35,
-  };
+  const RightSidebar(
+      {super.key, required this.members, required this.committees});
 
   @override
   Widget build(BuildContext context) {
+    final overallStats = calculateOverallStats(members);
+    final committeeStats = calculateCommitteeStats(members, committees);
+
+    final totalMembers =
+        overallStats.accepted + overallStats.rejected + overallStats.pending;
+
+    // Split committee stats into two groups for the bar charts
+    final committeeNames = committeeStats.keys.toList();
+    final committeeGroup1 = <String, ChartStats>{};
+    final committeeGroup2 = <String, ChartStats>{};
+
+    final midIndex = (committeeNames.length / 2).ceil();
+    for (var i = 0; i < committeeNames.length; i++) {
+      if (i < midIndex) {
+        committeeGroup1[committeeNames[i]] = committeeStats[committeeNames[i]]!;
+      } else {
+        committeeGroup2[committeeNames[i]] = committeeStats[committeeNames[i]]!;
+      }
+    }
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
           children: [
-            // Chart for Members Status (Accepted, Rejected, Waiting)
+            // Chart for Members Status (Accepted, Rejected, Pending)
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -51,24 +58,27 @@ class RightSidebar extends StatelessWidget {
                       PieChartData(
                         sections: [
                           PieChartSectionData(
-                            value: memberStatusCounts['accepted']!.toDouble(),
+                            value: overallStats.accepted.toDouble(),
                             color: Colors.green,
-                            title:
-                                '${((memberStatusCounts['accepted']! / memberStatusCounts.values.reduce((a, b) => a + b)) * 100).toStringAsFixed(1)}%',
+                            title: totalMembers == 0
+                                ? '0%'
+                                : '${((overallStats.accepted / totalMembers) * 100).toStringAsFixed(1)}%',
                             radius: 40,
                           ),
                           PieChartSectionData(
-                            value: memberStatusCounts['rejected']!.toDouble(),
+                            value: overallStats.rejected.toDouble(),
                             color: Colors.red,
-                            title:
-                                '${((memberStatusCounts['rejected']! / memberStatusCounts.values.reduce((a, b) => a + b)) * 100).toStringAsFixed(1)}%',
+                            title: totalMembers == 0
+                                ? '0%'
+                                : '${((overallStats.rejected / totalMembers) * 100).toStringAsFixed(1)}%',
                             radius: 40,
                           ),
                           PieChartSectionData(
-                            value: memberStatusCounts['waiting']!.toDouble(),
-                            color: Colors.orange,
-                            title:
-                                '${((memberStatusCounts['waiting']! / memberStatusCounts.values.reduce((a, b) => a + b)) * 100).toStringAsFixed(1)}%',
+                            value: overallStats.pending.toDouble(),
+                            color: Colors.blue,
+                            title: totalMembers == 0
+                                ? '0%'
+                                : '${((overallStats.pending / totalMembers) * 100).toStringAsFixed(1)}%',
                             radius: 40,
                           ),
                         ],
@@ -84,7 +94,7 @@ class RightSidebar extends StatelessWidget {
                       const SizedBox(width: 8),
                       _buildIndicator(color: Colors.red, text: 'Rejected'),
                       const SizedBox(width: 8),
-                      _buildIndicator(color: Colors.orange, text: 'Waiting'),
+                      _buildIndicator(color: Colors.blue, text: 'Waiting'),
                     ],
                   ),
                 ],
@@ -92,123 +102,156 @@ class RightSidebar extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // First Bar Chart for Committee Members Count (Group 1)
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Committee Members (Part 1)',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 150, // Adjust height as needed
-                    child: BarChart(
-                      BarChartData(
-                        gridData: const FlGridData(show: false),
-                        titlesData: FlTitlesData(
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: (double value, TitleMeta meta) {
-                                final index = value.toInt();
-                                if (index >= 0 &&
-                                    index < committeeGroup1Counts.length) {
-                                  return Text(
-                                    committeeGroup1Counts.keys.toList()[index],
-                                    style: const TextStyle(fontSize: 12),
-                                  );
-                                }
-                                return const Text('');
-                              },
+            if (committeeGroup1.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Committee Status (Part 1)',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 150, // Adjust height as needed
+                      child: BarChart(
+                        BarChartData(
+                          gridData: const FlGridData(show: false),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget:
+                                    (double value, TitleMeta meta) {
+                                  final index = value.toInt();
+                                  if (index >= 0 &&
+                                      index < committeeGroup1.length) {
+                                    return Text(
+                                      committeeGroup1.keys.toList()[index],
+                                      style: const TextStyle(fontSize: 12),
+                                    );
+                                  }
+                                  return const Text('');
+                                },
+                              ),
+                            ),
+                            leftTitles: const AxisTitles(
+                              sideTitles: SideTitles(
+                                  showTitles: true, reservedSize: 30),
+                            ),
+                            topTitles: const AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
+                            ),
+                            rightTitles: const AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
                             ),
                           ),
-                          leftTitles: const AxisTitles(
-                            sideTitles:
-                                SideTitles(showTitles: true, reservedSize: 30),
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
+                          borderData: FlBorderData(show: false),
+                          barGroups: _generateBarGroupsForCommitteeStatus(
+                              context, committeeGroup1),
                         ),
-                        borderData: FlBorderData(show: false),
-                        barGroups:
-                            _generateBarGroups(context, committeeGroup1Counts),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-
-// Second Bar Chart for Committee Members Count (Group 2)
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'Committee Members (Part 2)',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 150, // Adjust height as needed
-                    child: BarChart(
-                      BarChartData(
-                        gridData: const FlGridData(show: false),
-                        titlesData: FlTitlesData(
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: (double value, TitleMeta meta) {
-                                final index = value.toInt();
-                                if (index >= 0 &&
-                                    index < committeeGroup2Counts.length) {
-                                  return Text(
-                                    committeeGroup2Counts.keys.toList()[index],
-                                    style: const TextStyle(fontSize: 12),
-                                  );
-                                }
-                                return const Text('');
-                              },
+            if (committeeGroup1.isNotEmpty) const SizedBox(height: 20),
+            // Second Bar Chart for Committee Members Count (Group 2)
+            if (committeeGroup2.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      'Committee Status (Part 2)',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 150, // Adjust height as needed
+                      child: BarChart(
+                        BarChartData(
+                          gridData: const FlGridData(show: false),
+                          titlesData: FlTitlesData(
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget:
+                                    (double value, TitleMeta meta) {
+                                  final index = value.toInt();
+                                  if (index >= 0 &&
+                                      index < committeeGroup2.length) {
+                                    return Text(
+                                      committeeGroup2.keys.toList()[index],
+                                      style: const TextStyle(fontSize: 12),
+                                    );
+                                  }
+                                  return const Text('');
+                                },
+                              ),
+                            ),
+                            leftTitles: const AxisTitles(
+                              sideTitles: SideTitles(
+                                  showTitles: true, reservedSize: 30),
+                            ),
+                            topTitles: const AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
+                            ),
+                            rightTitles: const AxisTitles(
+                              sideTitles: SideTitles(showTitles: false),
                             ),
                           ),
-                          leftTitles: const AxisTitles(
-                            sideTitles:
-                                SideTitles(showTitles: true, reservedSize: 30),
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
-                          rightTitles: const AxisTitles(
-                            sideTitles: SideTitles(showTitles: false),
-                          ),
+                          borderData: FlBorderData(show: false),
+                          barGroups: _generateBarGroupsForCommitteeStatus(
+                              context, committeeGroup2),
                         ),
-                        borderData: FlBorderData(show: false),
-                        barGroups:
-                            _generateBarGroups(context, committeeGroup2Counts),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
           ],
         ),
       ),
     );
+  }
+
+  List<BarChartGroupData> _generateBarGroupsForCommitteeStatus(
+      BuildContext context, Map<String, ChartStats> data) {
+    final List<BarChartGroupData> barGroups = [];
+    data.forEach((committee, stats) {
+      barGroups.add(
+        BarChartGroupData(
+          x: data.keys.toList().indexOf(committee),
+          barRods: [
+            BarChartRodData(
+              toY: stats.accepted.toDouble(),
+              color: Colors.green.withOpacity(0.7),
+              width: 10,
+            ),
+            BarChartRodData(
+              toY: stats.rejected.toDouble(),
+              color: Colors.red.withOpacity(0.7),
+              width: 10,
+            ),
+            BarChartRodData(
+              toY: stats.pending.toDouble(),
+              color: Colors.blue.withOpacity(0.7),
+              width: 10,
+            ),
+          ],
+        ),
+      );
+    });
+    return barGroups;
   }
 
   List<BarChartGroupData> _generateBarGroups(
