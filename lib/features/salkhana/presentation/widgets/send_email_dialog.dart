@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:osc_system/core/constant/functions.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
@@ -260,15 +261,7 @@ class SendEmailDialog extends StatelessWidget {
                         title: "Send to All",
                         color: const Color(0xffed7806),
                         onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            for (var member
-                                in SalkhanaCubit.get(context).members) {
-                              debugPrint("Sending to: ${member.email}");
-                              debugPrint("Content: ${contentController.text}");
-                              debugPrint("Date: ${dateController.text}");
-                              // Implement sending logic for all
-                            }
-                          }
+                          if (formKey.currentState!.validate()) {}
                         },
                       ),
                     if (selectedMembers.isNotEmpty)
@@ -277,16 +270,8 @@ class SendEmailDialog extends StatelessWidget {
                         color: theme.primaryColor,
                         onPressed: () {
                           if (formKey.currentState!.validate()) {
-                            if (selectedMembers.isEmpty) {
-                              MotionSnackBarWarning(context, "Select members!");
-                              return;
-                            }
-                            for (var member in selectedMembers) {
-                              debugPrint("Sending to: ${member.email}");
-                              debugPrint("Content: ${contentController.text}");
-                              debugPrint("Date: ${dateController.text}");
-                              // Implement sending logic for selected
-                            }
+                            BlocProvider.of<SalkhanaCubit>(context)
+                                .sendEmail(selectedMembers);
                           }
                         },
                       ),

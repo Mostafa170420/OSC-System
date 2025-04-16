@@ -12,12 +12,8 @@ List committees = [
 ];
 String accountName = "";
 
-
-String accountName = "";
-
 class CustomValidator {
   static String? Function(String?)? passwordValidator = (value) {
-  passwordValidator(value) {
     if (value!.isEmpty) {
       return "Required";
     }
@@ -33,9 +29,8 @@ class CustomValidator {
     // }
 
     return null;
-  }
-  usernameValidator(value) {
-  usernameValidator(value) {
+  };
+  static String? Function(String?)? usernameValidator = (value) {
     if (value!.isEmpty) {
       return "Required";
     }
@@ -50,8 +45,8 @@ class CustomValidator {
     }
 
     return null;
-  }
-  validator(value) {
+  };
+  static String? Function(String?)? validator = (value) {
     if (value!.isEmpty) {
       return "Required";
     }
@@ -61,12 +56,12 @@ class CustomValidator {
     }
 
     return null;
-  }
-  emailValidator(value) {
+  };
+  static String? Function(String?)? emailValidator = (value) {
     if (value!.isEmpty) {
       return "Required";
     }
-    if (!(value.contains("@") && value.contains(".com"))) {
+    if (!(value.contains("@"))) {
       return "Required Email Format";
     }
     if (value.length < 5) {
@@ -76,10 +71,8 @@ class CustomValidator {
       return "Email is too long";
     }
 
-
     return null;
-  }
- return null;
+  };
 }
 
 class Logo extends StatelessWidget {
@@ -102,7 +95,6 @@ class Logo extends StatelessWidget {
     );
   }
 }
-
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -131,5 +123,3 @@ class CustomButton extends StatelessWidget {
     );
   }
 }
- return null;
-

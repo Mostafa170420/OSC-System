@@ -1,5 +1,6 @@
 import 'package:either_dart/either.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:osc_system/features/emails/domain/repositories/email_repository.dart';
 
 import '../../data/model/member.dart';
 import '../../data/repositories/salkhana_repository_imp.dart';
@@ -7,8 +8,9 @@ import '../../domain/repositories/salkhana_repository.dart';
 import 'salkhana_states.dart';
 
 class SalkhanaCubit extends Cubit<SalkhanaStates> {
-  SalkhanaCubit() : super(SalkhanaLoading());
+  SalkhanaCubit({required this.emailRepository}) : super(SalkhanaLoading());
   SalkhanaRepositoryImp salkhanaRepositoryImp = SalkhanaRepositoryImp();
+  EmailRepository emailRepository;
   List<SalkhanaMemberModel> members = [];
   String committee = "";
   String salkhanaSeason = "Salkhana25";
@@ -94,5 +96,11 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
     } else {
       filterMembers();
     }
+  }
+
+  void sendEmail(List<SalkhanaMemberModel> members) async {
+    emailRepository.sendEmails(members).fold(
+        (fail) => emit(SalkhanaFailureFirestore()),
+        (sucsses) => emit(SalkhanaSuccssesSendEmail()));
   }
 }

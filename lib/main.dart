@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:osc_system/core/api/dio_consumer.dart';
+import 'package:osc_system/features/emails/data/repositories/email_repository_imp.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import 'core/theme/theme.dart';
@@ -58,7 +60,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SidebarCubit(),
         ),
-        BlocProvider(create: (context) => SalkhanaCubit()..getMembers()),
+        BlocProvider(
+            create: (context) => SalkhanaCubit(
+                emailRepository: EmailRepositoryImp(api: DioConsumer()))
+              ..getMembers()),
         BlocProvider(create: (_) => ThemeCubit()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
