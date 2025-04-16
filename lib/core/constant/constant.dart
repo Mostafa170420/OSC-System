@@ -8,19 +8,32 @@ List committees = [
   ["assets/images/ui.png", "UI-UX"],
   ["assets/images/linux-tux-svgrepo-com.png", "Linux"],
   ["assets/images/icons8-blender-100.png", "Blender"],
+  ["assets/images/ST.png", "S&T"],
+  ["assets/images/games.png", "Game"],
+  ["assets/images/content.png", "Media"],
+  ["assets/images/pr.png", "PR&LR"],
+  ["assets/images/hr.png", "HR"],
   ["assets/images/all.png", ""]
 ];
 List<List<String>> convertToListOfLists(List committees) {
   return committees.map<List<String>>((item) {
-    if (item is List && item.length >= 2 && item[0] is String && item[1] is String) {
-      return [item[1] as String]; // Extract only the second element (committee name)
+    if (item is List &&
+        item.length >= 2 &&
+        item[0] is String &&
+        item[1] is String) {
+      return [
+        item[1] as String
+      ]; // Extract only the second element (committee name)
     } else if (item is String) {
       return [item]; // If the item is just a string, wrap it in a list
     } else {
-      return [""]; // Handle cases with incorrect structure or non-string elements
+      return [
+        ""
+      ]; // Handle cases with incorrect structure or non-string elements
     }
   }).toList();
 }
+
 String accountName = "";
 
 class CustomValidator {

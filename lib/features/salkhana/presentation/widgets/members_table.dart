@@ -17,173 +17,184 @@ class MembersTable extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) => DropDownCubit(),
-      child: BlocBuilder<SalkhanaCubit, SalkhanaStates>(
-        buildWhen: (previous, current) =>
-            current is SalkhanaLoading ||
-            current is SalkhanaSuccsses ||
-            current is SalkhanaFailureNetwork,
-        builder: (context, state) {
-          print(state);
+      child: BlocListener<SalkhanaCubit, SalkhanaStates>(
+        listener: (context, state) {
+          // TODO: implement listener
+          if (state is SalkhanaFailureNetwork) {
+            MotionSnackBarError(context, "Check Your NetWork");
+          }
           if (state is SalkhanaFailureFirestore) {
-            return Center(
-              child: Text("Error"),
-            );
-          } else {
-            return Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: Text(
-                      "Members",
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleLarge?.copyWith(fontSize: 25),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  Colors.black.withOpacity(0.3), // Shadow color
-                              blurRadius: 10, // Spread of the shadow
-                              offset: Offset(0, 5), // Position of the shadow
-                            ),
-                          ],
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Theme.of(context)
-                                .primaryColor
-                                .withOpacity(0.2), // Border color
-                            width: 1, // Border width
-                          ),
-                        ),
-                        width: size.width / 5,
-                        child: DropdownButton(
-                            underline: SizedBox(),
-                            dropdownColor: Theme.of(context).cardColor,
-                            isExpanded: true,
-                            iconEnabledColor: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(10),
-                            menuWidth: 300,
-                            value: dropdownTitle,
-                            alignment: AlignmentDirectional.center,
-                            items: generateItems(context),
-                            style: TextStyle(),
-                            onChanged: (value) {
-                              dropdownTitle = value;
-                              BlocProvider.of<SalkhanaCubit>(context)
-                                  .changeCommittee(value);
-                            }),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: Skeletonizer(
-                      enabled: (state is SalkhanaSuccsses ||
-                              state is SalkhanaSuccssesFirestore)
-                          ? false
-                          : true,
-                      child: ListView(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: FittedBox(
-                              fit: BoxFit.cover,
-                              child: DataTable(
-                                columns: [
-                                  DataColumn(
-                                    headingRowAlignment:
-                                        MainAxisAlignment.center,
-                                    label: Text(
-                                      "Name",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    headingRowAlignment:
-                                        MainAxisAlignment.center,
-                                    label: Text(
-                                      "Phone",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    headingRowAlignment:
-                                        MainAxisAlignment.center,
-                                    label: Text(
-                                      "Committee 1",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    headingRowAlignment:
-                                        MainAxisAlignment.center,
-                                    label: Text(
-                                      "Committee 2",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                  ),
-                                  DataColumn(
-                                    headingRowAlignment:
-                                        MainAxisAlignment.center,
-                                    label: Text(
-                                      "Actions",
-                                      overflow: TextOverflow.clip,
-                                      maxLines: 1,
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                  ),
-                                ],
-                                rows: _buildTableRows(
-                                    context,
-                                    (state is SalkhanaSuccsses)
-                                        ? state.members
-                                        : faceList),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            );
+            MotionSnackBarError(context, "Failure Store");
           }
         },
+        child: BlocBuilder<SalkhanaCubit, SalkhanaStates>(
+          buildWhen: (previous, current) =>
+              current is SalkhanaLoading ||
+              current is SalkhanaSuccsses ||
+              current is SalkhanaFailureNetwork,
+          builder: (context, state) {
+            print(state);
+            if (state is SalkhanaFailureFirestore) {
+              return Center(
+                child: Text("Error"),
+              );
+            } else {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      child: Text(
+                        "Members",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleLarge?.copyWith(fontSize: 25),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black
+                                    .withOpacity(0.3), // Shadow color
+                                blurRadius: 10, // Spread of the shadow
+                                offset: Offset(0, 5), // Position of the shadow
+                              ),
+                            ],
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.2), // Border color
+                              width: 1, // Border width
+                            ),
+                          ),
+                          width: size.width / 5,
+                          child: DropdownButton(
+                              underline: SizedBox(),
+                              dropdownColor: Theme.of(context).cardColor,
+                              isExpanded: true,
+                              iconEnabledColor: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(10),
+                              menuWidth: 300,
+                              value: dropdownTitle,
+                              alignment: AlignmentDirectional.center,
+                              items: generateItems(context),
+                              style: TextStyle(),
+                              onChanged: (value) {
+                                dropdownTitle = value;
+                                BlocProvider.of<SalkhanaCubit>(context)
+                                    .changeCommittee(value);
+                              }),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Skeletonizer(
+                        enabled: (state is SalkhanaSuccsses ||
+                                state is SalkhanaSuccssesFirestore)
+                            ? false
+                            : true,
+                        child: ListView(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: DataTable(
+                                  columns: [
+                                    DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text(
+                                        "Name",
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text(
+                                        "Phone",
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text(
+                                        "Committee 1",
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text(
+                                        "Committee 2",
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                    DataColumn(
+                                      headingRowAlignment:
+                                          MainAxisAlignment.center,
+                                      label: Text(
+                                        "Actions",
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ),
+                                    ),
+                                  ],
+                                  rows: _buildTableRows(
+                                      context,
+                                      (state is SalkhanaSuccsses)
+                                          ? state.members
+                                          : faceList),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }

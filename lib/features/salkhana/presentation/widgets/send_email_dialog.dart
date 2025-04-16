@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:osc_system/core/constant/functions.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
 import '../../../../core/constant/constant.dart';
 import '../../data/model/member.dart';
@@ -241,29 +240,6 @@ class SendEmailDialog extends StatelessWidget {
                   spacing: 10,
                   runSpacing: 10,
                   children: [
-                    if (selectedMembers.isEmpty && initialSingleMember != null)
-                      CustomButton(
-                        title: "Send to Member",
-                        color: const Color(0xff4cb050),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            debugPrint("Sending to: ${emailController.text}");
-                            debugPrint("Content: ${contentController.text}");
-                            debugPrint("Date: ${dateController.text}");
-                            // Implement sending logic
-                          }
-                        },
-                      ),
-                    if (SalkhanaCubit.get(context).members.isNotEmpty &&
-                        selectedMembers.isEmpty &&
-                        initialSingleMember == null)
-                      CustomButton(
-                        title: "Send to All",
-                        color: const Color(0xffed7806),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {}
-                        },
-                      ),
                     if (selectedMembers.isNotEmpty)
                       CustomButton(
                         title: "Send to Selected (${selectedMembers.length})",

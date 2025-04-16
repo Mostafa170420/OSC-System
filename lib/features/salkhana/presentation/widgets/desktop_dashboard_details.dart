@@ -14,16 +14,18 @@ class DesktopDashboardDetails extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 4,
+          flex: 2,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
             child: MembersTable(),
           ),
         ),
-        Expanded(child:BlocBuilder<SalkhanaCubit, SalkhanaStates>(
-      buildWhen: (previous, current) => current is SalkhanaSuccsses,
-      builder: (context, state) {
+        Expanded(
+            child: BlocBuilder<SalkhanaCubit, SalkhanaStates>(
+          buildWhen: (previous, current) => current is SalkhanaSuccsses,
+          builder: (context, state) {
             return RightSidebar(
+              
               committees: convertToListOfLists(committees),
               members: SalkhanaCubit.get(context).members,
             );

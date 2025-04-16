@@ -151,6 +151,8 @@ class AddMemberDialog extends StatelessWidget {
                                 child: BlocBuilder<DropDownCubit, int>(
                                   builder: (context, state) {
                                     return DropdownButton(
+                                      dropdownColor:
+                                          Theme.of(context).cardColor,
                                       isExpanded: true,
                                       iconEnabledColor:
                                           Theme.of(context).primaryColor,
@@ -194,6 +196,9 @@ class AddMemberDialog extends StatelessWidget {
                                 child: BlocBuilder<DropDownCubit, int>(
                                   builder: (context, state) {
                                     return DropdownButton(
+                                      underline: SizedBox(),
+                                      dropdownColor:
+                                          Theme.of(context).cardColor,
                                       isExpanded: true,
                                       iconEnabledColor:
                                           Theme.of(context).primaryColor,
@@ -201,7 +206,6 @@ class AddMemberDialog extends StatelessWidget {
                                       menuWidth: 300,
                                       value: committee2,
                                       items: items,
-                                      underline: SizedBox(),
                                       onChanged: (value) {
                                         committee2 = value;
                                         DropDownCubit.get(context)

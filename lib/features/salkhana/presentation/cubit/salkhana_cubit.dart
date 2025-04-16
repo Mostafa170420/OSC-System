@@ -88,7 +88,7 @@ class SalkhanaCubit extends Cubit<SalkhanaStates> {
     List<SalkhanaMemberModel> data = [];
     if (text.isNotEmpty) {
       for (var member in members) {
-        if (member.id.toLowerCase().startsWith(text.toLowerCase())) {
+        if (member.name.toLowerCase().startsWith(text.toLowerCase())) {
           data.add(member);
         }
       }

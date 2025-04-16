@@ -19,7 +19,6 @@ class RightSidebar extends StatelessWidget {
     final totalMembers =
         overallStats.accepted + overallStats.rejected + overallStats.pending;
 
-    // Split committee stats into two groups for the bar charts
     final committeeNames = committeeStats.keys.toList();
     final committeeGroup1 = <String, ChartStats>{};
     final committeeGroup2 = <String, ChartStats>{};
@@ -35,7 +34,7 @@ class RightSidebar extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Column(
           children: [
             // Chart for Members Status (Accepted, Rejected, Pending)
@@ -53,9 +52,20 @@ class RightSidebar extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   SizedBox(
-                    height: 180,
+                    height: 150,
                     child: PieChart(
+                      key: ValueKey(overallStats.hashCode),
                       PieChartData(
+                        borderData: FlBorderData(show: false),
+                        pieTouchData: PieTouchData(
+                          touchCallback:
+                              (FlTouchEvent event, pieTouchResponse) {
+                            if (event is! FlLongPressEnd &&
+                                event is! PointerUpEvent) {
+                              return;
+                            }
+                          },
+                        ),
                         sections: [
                           PieChartSectionData(
                             value: overallStats.accepted.toDouble(),
@@ -90,17 +100,23 @@ class RightSidebar extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildIndicator(color: Colors.green, text: 'Accepted'),
+                      Flexible(
+                          child: _buildIndicator(
+                              color: Colors.green, text: 'Accepted')),
                       const SizedBox(width: 8),
-                      _buildIndicator(color: Colors.red, text: 'Rejected'),
+                      Flexible(
+                          child: _buildIndicator(
+                              color: Colors.red, text: 'Rejected')),
                       const SizedBox(width: 8),
-                      _buildIndicator(color: Colors.blue, text: 'Waiting'),
+                      Flexible(
+                          child: _buildIndicator(
+                              color: Colors.blue, text: 'Waiting')),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             // First Bar Chart for Committee Members Count (Group 1)
             if (committeeGroup1.isNotEmpty)
               Container(
@@ -119,20 +135,31 @@ class RightSidebar extends StatelessWidget {
                     SizedBox(
                       height: 150, // Adjust height as needed
                       child: BarChart(
+                        key: ValueKey(committeeGroup1.hashCode),
                         BarChartData(
                           gridData: const FlGridData(show: false),
                           titlesData: FlTitlesData(
                             bottomTitles: AxisTitles(
+                              axisNameSize: 10,
                               sideTitles: SideTitles(
+                                reservedSize: 30,
                                 showTitles: true,
                                 getTitlesWidget:
                                     (double value, TitleMeta meta) {
                                   final index = value.toInt();
                                   if (index >= 0 &&
                                       index < committeeGroup1.length) {
-                                    return Text(
-                                      committeeGroup1.keys.toList()[index],
-                                      style: const TextStyle(fontSize: 12),
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.0),
+                                      child: Text(
+                                        committeeGroup1.keys.toList()[index],
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     );
                                   }
                                   return const Text('');
@@ -159,7 +186,7 @@ class RightSidebar extends StatelessWidget {
                   ],
                 ),
               ),
-            if (committeeGroup1.isNotEmpty) const SizedBox(height: 20),
+            if (committeeGroup1.isNotEmpty) const SizedBox(height: 10),
             // Second Bar Chart for Committee Members Count (Group 2)
             if (committeeGroup2.isNotEmpty)
               Container(
@@ -178,6 +205,8 @@ class RightSidebar extends StatelessWidget {
                     SizedBox(
                       height: 150, // Adjust height as needed
                       child: BarChart(
+                        key:
+                            ValueKey(committeeGroup2.hashCode), // Important key
                         BarChartData(
                           gridData: const FlGridData(show: false),
                           titlesData: FlTitlesData(
@@ -265,7 +294,7 @@ class RightSidebar extends StatelessWidget {
             BarChartRodData(
               toY: count.toDouble(),
               color: Theme.of(context).primaryColor,
-              width: 16,
+              width: 12,
             ),
           ],
         ),
@@ -278,16 +307,18 @@ class RightSidebar extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 16,
-          height: 16,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
+        Flexible(
+          child: Container(
+            width: 16,
+            height: 16,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
           ),
         ),
-        const SizedBox(width: 4),
-        Text(text),
+        const SizedBox(width: 8),
+        Flexible(child: Text(text)),
       ],
     );
   }
