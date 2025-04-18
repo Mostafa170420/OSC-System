@@ -8,7 +8,8 @@ import '../cubit/salkhana_cubit.dart';
 import 'custom_text_field.dart';
 
 class AddMemberDialog extends StatelessWidget {
-  AddMemberDialog({super.key, this.member});
+  AddMemberDialog({super.key, this.member, required this.title});
+  String title;
   final SalkhanaMemberModel? member;
   final formKey = GlobalKey<FormState>();
 
@@ -46,7 +47,7 @@ class AddMemberDialog extends StatelessWidget {
                   child: SizedBox(height: 100, width: 100, child: Logo()),
                 ),
                 Text(
-                  "Add New Member",
+                  title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(
@@ -250,7 +251,8 @@ class AddMemberDialog extends StatelessWidget {
                                       committee2: committee2 ?? "",
                                       resultCommittee1: "",
                                       resultCommittee2: "",
-                                      attendanceDate: "a",
+                                      attendanceDate: interviewDate.text,
+                                      isAttend: true,
                                       emailSent: false));
                               Navigator.pop(context);
                             }
@@ -285,7 +287,8 @@ class AddMemberDialog extends StatelessWidget {
                                       committee2: committee2 ?? "",
                                       resultCommittee1: "",
                                       resultCommittee2: "",
-                                      attendanceDate: "",
+                                      attendanceDate: interviewDate.text,
+                                      isAttend: false,
                                       emailSent: false));
                               Navigator.pop(context);
                             }

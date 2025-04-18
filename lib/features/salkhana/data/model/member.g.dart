@@ -17,7 +17,7 @@ class SalkhanaMemberModelAdapter extends TypeAdapter<SalkhanaMemberModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SalkhanaMemberModel(
-      indexAtDb: fields[0] as int?,
+      isAttend: fields[0] as bool?,
       id: fields[1] as String,
       name: fields[2] as String,
       email: fields[3] as String,
@@ -40,7 +40,7 @@ class SalkhanaMemberModelAdapter extends TypeAdapter<SalkhanaMemberModel> {
     writer
       ..writeByte(15)
       ..writeByte(0)
-      ..write(obj.indexAtDb)
+      ..write(obj.isAttend)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)

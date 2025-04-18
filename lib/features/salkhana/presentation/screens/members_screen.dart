@@ -72,7 +72,9 @@ class MembersScreen extends StatelessWidget {
                                 builder: (context) => AlertDialog(
                                   backgroundColor:
                                       Theme.of(context).dialogBackgroundColor,
-                                  content: AddMemberDialog(),
+                                  content: AddMemberDialog(
+                                    title: "Add New Member",
+                                  ),
                                 ),
                               );
                             },
@@ -333,12 +335,12 @@ class MembersScreen extends StatelessWidget {
                 children: [
                   MaterialButton(
                     onPressed: () {
-                      member.attendanceDate =
-                          member.attendanceDate.isEmpty ? "attend" : "";
+                      member.isAttend = !member.isAttend!;
+
                       BlocProvider.of<SalkhanaCubit>(context)
                           .updateMember(member);
                     },
-                    child: member.attendanceDate.isEmpty
+                    child: !member.isAttend!
                         ? Text("not Attend",
                             style: Theme.of(context)
                                 .textTheme
@@ -540,6 +542,7 @@ class MembersScreen extends StatelessWidget {
                             backgroundColor:
                                 Theme.of(context).dialogBackgroundColor,
                             content: AddMemberDialog(
+                              title: "Update Member",
                               member: member,
                             ),
                           ),

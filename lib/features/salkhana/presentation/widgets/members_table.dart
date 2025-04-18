@@ -270,12 +270,11 @@ class MembersTable extends StatelessWidget {
                 children: [
                   MaterialButton(
                     onPressed: () {
-                      member.attendanceDate =
-                          member.attendanceDate.isEmpty ? "attend" : "";
+                      member.isAttend = !member.isAttend!;
                       BlocProvider.of<SalkhanaCubit>(context)
                           .updateMember(member);
                     },
-                    child: member.attendanceDate.isEmpty
+                    child: !member.isAttend!
                         ? Text("not Attend",
                             style: Theme.of(context)
                                 .textTheme
@@ -324,6 +323,7 @@ class MembersTable extends StatelessWidget {
         id: "5",
         name: "Mostafa Ahmed",
         email: "email",
+        isAttend: false,
         phone: "01009682965",
         academicYear: "academicYear",
         college: "college",

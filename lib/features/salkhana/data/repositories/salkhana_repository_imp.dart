@@ -40,9 +40,6 @@ class SalkhanaRepositoryImp extends SalkhanaRepository {
     await getLocalMembers().fold((fail) {
       return Left(Failure());
     }, (response) => members = response);
-    await removeAllMembersFromRemote().fold((fail) {
-      return Left(Failure());
-    }, (sucsses) {});
     await addAllMembersToRemote(members).fold((fail) {
       return Left(Failure());
     }, (Sucsses) {
