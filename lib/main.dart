@@ -21,9 +21,8 @@ void main() async {
 
   // Initialize Supabase
   await Supabase.initialize(
-    url: 'https://juwsfchmxxcpudzwfdiv.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1d3NmY2hteHhjcHVkendmZGl2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEwMzg3MDIsImV4cCI6MjA1NjYxNDcwMn0.arEI8z_RXipUw_BN66aGEBuATVnKmiC5wyLH9wHYT_I',
+    url: '',
+    anonKey: '',
   );
 
   // Initialize Hive
@@ -71,7 +70,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: state is LightThemeState
                 ? AppThemes.lightTheme
-                : AppThemes.darkTheme, 
+                : AppThemes.darkTheme,
             home: LoginScreen(),
           );
         },
