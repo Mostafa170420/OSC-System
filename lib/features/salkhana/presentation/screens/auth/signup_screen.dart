@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:osc_system/core/constant/constant.dart';
 import 'package:osc_system/core/constant/functions.dart';
 
@@ -55,133 +56,138 @@ class SignUpScreen extends StatelessWidget {
                 key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        height: 100,
-                        width: 100,
-                        child: Logo(),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Center(
-                      child: Text(
-                        "Sign Up",
-                        style: theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: theme.primaryColor,
-                          fontSize: 32,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 200),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        horizontalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: widget,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 30),
-
-                    // Username
-                    Text("Username",
-                        style: theme.textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: usernameController,
-                      validator: CustomValidator.usernameValidator,
-                      decoration: _buildInputDecoration(
-                          theme, "Enter your username", Icons.person),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Password
-                    Text("Password",
-                        style: theme.textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: passwordController,
-                      validator: CustomValidator.passwordValidator,
-                      obscureText: true,
-                      decoration: _buildInputDecoration(
-                          theme, "Enter your password", Icons.lock),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Confirm Password
-                    Text("Confirm Password",
-                        style: theme.textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: confirmPasswordController,
-                      validator: (value) {
-                        if (value != passwordController.text) {
-                          return "Passwords do not match";
-                        }
-                        return null;
-                      },
-                      obscureText: true,
-                      decoration: _buildInputDecoration(
-                          theme, "Re-enter your password", Icons.lock),
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    // Sign Up Button
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            signUp(context);
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: theme.primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                      children: [
+                        Center(
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Logo(),
                           ),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
                         ),
-                        child: Text("Sign Up",
-                            style: theme.textTheme.labelSmall
-                                ?.copyWith(color: Colors.white)),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Login Link
-                    Align(
-                      alignment: Alignment.center,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            child: Text("Already have an account? ",
-                                style: theme.textTheme.labelSmall
-                                    ?.copyWith(color: Colors.grey)),
-                          ),
-                          Flexible(
-                            child: TextButton(
-                              onPressed: () {
-                                usernameController.clear();
-                                passwordController.clear();
-                                confirmPasswordController.clear();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()),
-                                );
-                              },
-                              child: Text("Login",
-                                  style: theme.textTheme.labelSmall
-                                      ?.copyWith(color: theme.primaryColor)),
+                        const SizedBox(height: 20),
+                        Center(
+                          child: Text(
+                            "Sign Up",
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: theme.primaryColor,
+                              fontSize: 32,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                        ),
+                        const SizedBox(height: 30),
+
+                        // Username
+                        Text("Username",
+                            style: theme.textTheme.labelMedium
+                                ?.copyWith(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: usernameController,
+                          validator: CustomValidator.usernameValidator,
+                          decoration: _buildInputDecoration(
+                              theme, "Enter your username", Icons.person),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Password
+                        Text("Password",
+                            style: theme.textTheme.labelMedium
+                                ?.copyWith(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: passwordController,
+                          validator: CustomValidator.passwordValidator,
+                          obscureText: true,
+                          decoration: _buildInputDecoration(
+                              theme, "Enter your password", Icons.lock),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Confirm Password
+                        Text("Confirm Password",
+                            style: theme.textTheme.labelMedium
+                                ?.copyWith(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          controller: confirmPasswordController,
+                          validator: (value) {
+                            if (value != passwordController.text) {
+                              return "Passwords do not match";
+                            }
+                            return null;
+                          },
+                          obscureText: true,
+                          decoration: _buildInputDecoration(
+                              theme, "Re-enter your password", Icons.lock),
+                        ),
+
+                        const SizedBox(height: 30),
+
+                        // Sign Up Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                signUp(context);
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: theme.primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                            ),
+                            child: Text("Sign Up",
+                                style: theme.textTheme.labelSmall
+                                    ?.copyWith(color: Colors.white)),
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Login Link
+                        Align(
+                          alignment: Alignment.center,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: Text("Already have an account? ",
+                                    style: theme.textTheme.labelSmall
+                                        ?.copyWith(color: Colors.grey)),
+                              ),
+                              Flexible(
+                                child: TextButton(
+                                  onPressed: () {
+                                    usernameController.clear();
+                                    passwordController.clear();
+                                    confirmPasswordController.clear();
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text("Login",
+                                      style: theme.textTheme.labelSmall
+                                          ?.copyWith(
+                                              color: theme.primaryColor)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
               ),
             ),
           ),

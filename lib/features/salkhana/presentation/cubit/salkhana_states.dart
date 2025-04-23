@@ -1,6 +1,6 @@
 import '../../data/model/member.dart';
 
-class SalkhanaStates {}
+abstract class SalkhanaStates {}
 
 class SalkhanaLoading extends SalkhanaStates {}
 

@@ -330,6 +330,7 @@ class MembersTable extends StatelessWidget {
         committee1: "committee1",
         committee2: "committee2",
         attendanceDate: "sdf",
+        attendanceDate2: "",
         resultCommittee1: "resultCommittee1",
         resultCommittee2: "resultCommittee2",
         emailSent: false),

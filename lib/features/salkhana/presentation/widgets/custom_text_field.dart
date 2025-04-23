@@ -16,19 +16,18 @@ class CustomTextField extends StatelessWidget {
   final IconData icon;
   final TextEditingController controller;
   final maxLines;
-  
+
   final dynamic alignlableWithHint;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       maxLines: maxLines,
       validator: validator,
       readOnly: readOnly,
       controller: controller,
       cursorColor: Theme.of(context).primaryColor,
       decoration: InputDecoration(
-        alignLabelWithHint: alignlableWithHint,
+          alignLabelWithHint: alignlableWithHint,
           hintText: title,
           fillColor: Theme.of(context).cardColor,
           filled: true,

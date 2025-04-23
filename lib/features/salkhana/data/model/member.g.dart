@@ -17,28 +17,28 @@ class SalkhanaMemberModelAdapter extends TypeAdapter<SalkhanaMemberModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SalkhanaMemberModel(
-      isAttend: fields[0] as bool?,
-      id: fields[1] as String,
-      name: fields[2] as String,
-      email: fields[3] as String,
-      phone: fields[4] as String,
-      academicYear: fields[5] as String,
-      college: fields[6] as String,
-      committee1: fields[7] as String,
-      committee2: fields[8] as String,
-      resultCommittee1: fields[9] as String,
-      resultCommittee2: fields[10] as String,
-      rejectionReasonCommittee1: fields[11] as String?,
-      rejectionReasonCommittee2: fields[12] as String?,
-      attendanceDate: fields[13] as String,
-      emailSent: fields[14] as bool,
-    );
+        isAttend: fields[0] as bool?,
+        id: fields[1] as String,
+        name: fields[2] as String,
+        email: fields[3] as String,
+        phone: fields[4] as String,
+        academicYear: fields[5] as String,
+        college: fields[6] as String,
+        committee1: fields[7] as String,
+        committee2: fields[8] as String,
+        resultCommittee1: fields[9] as String,
+        resultCommittee2: fields[10] as String,
+        rejectionReasonCommittee1: fields[11] as String?,
+        rejectionReasonCommittee2: fields[12] as String?,
+        attendanceDate: fields[13] as String,
+        emailSent: fields[14] as bool,
+        attendanceDate2: fields[15] as String);
   }
 
   @override
   void write(BinaryWriter writer, SalkhanaMemberModel obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(16)
       ..writeByte(0)
       ..write(obj.isAttend)
       ..writeByte(1)
@@ -68,7 +68,9 @@ class SalkhanaMemberModelAdapter extends TypeAdapter<SalkhanaMemberModel> {
       ..writeByte(13)
       ..write(obj.attendanceDate)
       ..writeByte(14)
-      ..write(obj.emailSent);
+      ..write(obj.emailSent)
+      ..writeByte(15)
+      ..write(obj.attendanceDate2);
   }
 
   @override

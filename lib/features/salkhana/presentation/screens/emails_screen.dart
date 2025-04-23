@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osc_system/features/salkhana/presentation/widgets/send_email_dialog.dart';

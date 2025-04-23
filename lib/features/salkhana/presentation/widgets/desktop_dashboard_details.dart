@@ -1,3 +1,4 @@
+import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:osc_system/features/salkhana/presentation/cubit/salkhana_cubit.dart';
@@ -25,7 +26,6 @@ class DesktopDashboardDetails extends StatelessWidget {
           buildWhen: (previous, current) => current is SalkhanaSuccsses,
           builder: (context, state) {
             return RightSidebar(
-              
               committees: convertToListOfLists(committees),
               members: SalkhanaCubit.get(context).members,
             );

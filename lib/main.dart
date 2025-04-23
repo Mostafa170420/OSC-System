@@ -33,7 +33,7 @@ void main() async {
   Hive.registerAdapter(SalkhanaMemberModelAdapter());
 
   // Open a Hive box
-  await Hive.openBox<SalkhanaMemberModel>('salkhana_members');
+  await Hive.openBox<SalkhanaMemberModel>('salkhana_member');
   await Hive.openBox('authAdmin');
   // final box = Hive.box<SalkhanaMemberModel>('salkhana_members');
 
@@ -46,7 +46,6 @@ void main() async {
   // }
 
   print("===========================================");
-
   runApp(const MyApp());
 }
 

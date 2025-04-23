@@ -52,6 +52,9 @@ dependencies:
   motion_toast: ^2.12.1
   intl: ^0.20.2
   dio: ^5.8.0+1
+  flutter_launcher_icons: ^0.14.3
+  flutter_staggered_animations: ^1.1.1
+  delayed_widget: ^1.1.2
   
   # Removed hive_generator as it is already listed in dependencies
 
@@ -67,6 +70,13 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   hive_generator: ^2.0.1
+  flutter_launcher_icons: "^0.14.3"
+
+flutter_launcher_icons:
+  windows:
+    generate: true
+    image_path: "assets/images/OSC_logo.png"
+    icon_size: 128 # min:48, max:256, default: 48
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

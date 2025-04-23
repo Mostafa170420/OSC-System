@@ -29,25 +29,27 @@ class SalkhanaMemberModel {
   final String committee1;
 
   @HiveField(8)
-  final String committee2;
+  String committee2;
 
   @HiveField(9)
   String resultCommittee1;
 
   @HiveField(10)
-  final String resultCommittee2;
+  String resultCommittee2;
 
   @HiveField(11)
   String? rejectionReasonCommittee1;
 
   @HiveField(12)
-  final String? rejectionReasonCommittee2;
+  String? rejectionReasonCommittee2;
 
   @HiveField(13)
   String attendanceDate;
 
   @HiveField(14)
   final bool emailSent;
+  @HiveField(15)
+  final String attendanceDate2;
 
   // Constructor
   SalkhanaMemberModel({
@@ -65,6 +67,7 @@ class SalkhanaMemberModel {
     this.rejectionReasonCommittee1,
     this.rejectionReasonCommittee2,
     required this.attendanceDate,
+    required this.attendanceDate2,
     required this.emailSent,
   });
 
@@ -85,6 +88,7 @@ class SalkhanaMemberModel {
         rejectionReasonCommittee2: data['rejection_reason_committee_2'],
         attendanceDate: data["attendance_date"] ?? '',
         emailSent: data['email_sent'] ?? false,
+        attendanceDate2: data["attendance_date_2"] ?? '',
         isAttend: data["attend"] ?? false);
   }
 

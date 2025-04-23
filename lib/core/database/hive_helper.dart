@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 import '../../features/salkhana/data/model/member.dart';
 
 class HiveHelper {
-  static final box = Hive.box<SalkhanaMemberModel>("salkhana_members");
+  static final box = Hive.box<SalkhanaMemberModel>("salkhana_member");
   static final authBox = Hive.box("authAdmin");
 
   static Future<void> registerAdmin(String username, String password) async {
@@ -24,7 +24,6 @@ class HiveHelper {
 
   static bool adminExists(String username) => authBox.containsKey(username);
 
-  
   static List<SalkhanaMemberModel> getMembers() {
     try {
       return box.values.toList();
@@ -64,5 +63,4 @@ class HiveHelper {
   static void addMember(SalkhanaMemberModel member) {
     box.put(member.id, member);
   }
-
 }
