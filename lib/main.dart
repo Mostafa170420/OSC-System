@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: state is LightThemeState
                 ? AppThemes.lightTheme
-                : AppThemes.darkTheme, // 🌟 Uses the selected theme
+                : AppThemes.darkTheme, 
             home: LoginScreen(),
           );
         },
